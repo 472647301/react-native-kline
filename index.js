@@ -1,5 +1,74 @@
-import { requireNativeComponent } from 'react-native';
+import React, { useEffect } from "react";
+import { UIManager, Platform } from "react-native";
+import { requireNativeComponent, findNodeHandle } from "react-native";
 
-const ByronKline = requireNativeComponent('ByronKline', null);
+let byronController = undefined;
+const ByronKline = requireNativeComponent("ByronKline");
 
-export default ByronKline;
+export const dispatchByronKline = (event = "init", list = []) => {
+  if (!byronController) {
+    return;
+  }
+  if (event !== "init" && Platform.OS === "ios") {
+    list.reverse();
+  }
+  UIManager.dispatchViewManagerCommand(
+    findNodeHandle(byronController),
+    UIManager.getViewManagerConfig("ByronKline").Commands.byronController,
+    [{ event, list }]
+  );
+};
+
+export const KLineIndicator = {
+  MainMA: 0,
+  MainBOLL: 1,
+  MainNONE: 2,
+  ChildMACD: 3,
+  ChildKDJ: 4,
+  ChildRSI: 5,
+  ChildWR: 6,
+  ChildNONE: 7,
+  TimeLineShow: 8,
+  TimeLineHide: 9,
+  VolumeShow: 10,
+  VolumeHide: 11,
+};
+
+const KlineComponent = (props, forwardedRef) => {
+  const { onMoreKLineData, ...localProps } = props;
+  const onMoreKLineDataEvent = onMoreKLineData
+    ? (event) => onMoreKLineData(event.nativeEvent)
+    : null;
+  const _forwardedRef = (ref) => {
+    byronController = ref;
+    forwardedRef && forwardedRef(ref);
+  };
+
+  if (Platform.OS === "ios") {
+    props.datas.reverse();
+  }
+
+  useEffect(() => {
+    dispatchByronKline();
+  }, []);
+
+  return (
+    <ByronKline
+      {...localProps}
+      ref={_forwardedRef}
+      onRNMoreKLineData={onMoreKLineDataEvent}
+    />
+  );
+};
+
+const ByronKlineChart = React.forwardRef(KlineComponent);
+
+ByronKlineChart.defaultProps = {
+  datas: [],
+  locales: [],
+  indicators: [],
+  pricePrecision: 2,
+  volumePrecision: 2,
+};
+
+export default ByronKlineChart;

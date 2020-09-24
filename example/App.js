@@ -8,19 +8,74 @@
  * https://github.com/facebook/react-native
  */
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import ByronKline from 'react-native-kline';
+import React, {Component} from 'react';
+import {StyleSheet, Text, SafeAreaView} from 'react-native';
+import ByronKlineChart, {dispatchByronKline} from 'react-native-kline';
+import axios from 'axios';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
+  state = {
+    datas: [],
+  };
+
+  onMoreKLineData = async (params) => {
+    const res = await axios.get(
+      'http://api.zhuwenbo.cc/v1/kline?type=MIN_1&symbol=btcusdt&to=' +
+        params.id,
+    );
+    if (!res || !res.data) {
+      return;
+    }
+    dispatchByronKline('add', res.data);
+  };
+
+  async initKlineChart() {
+    const res = await axios.get(
+      'http://api.zhuwenbo.cc/v1/kline?type=MIN_1&symbol=btcusdt',
+    );
+    if (!res || !res.data) {
+      return;
+    }
+    this.setState({datas: res.data});
+  }
+
+  componentDidMount() {
+    this.initKlineChart();
+    const ws = new WebSocket('ws://49.233.210.12:1998/websocket');
+    ws.onopen = () => {
+      ws.send(
+        JSON.stringify({
+          event: 'subscribe',
+          data: 'MIN_1/BTCUSDT',
+        }),
+      );
+    };
+    ws.onmessage = (ev) => {
+      try {
+        const msg = JSON.parse(ev.data);
+        if (!msg || !this.state.datas.length) {
+          return;
+        }
+        if (msg.type !== 'MIN_1/BTCUSDT') {
+          return;
+        }
+        dispatchByronKline('update', [msg.data]);
+      } catch (e) {}
+    };
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.welcome}>☆ByronKline example☆</Text>
         <Text style={styles.instructions}>STATUS: loaded</Text>
         <Text style={styles.welcome}>☆☆☆</Text>
-        <ByronKline />
-      </View>
+        <ByronKlineChart
+          style={{height: 400}}
+          datas={this.state.datas}
+          onMoreKLineData={this.onMoreKLineData}
+        />
+      </SafeAreaView>
     );
   }
 }
@@ -28,8 +83,8 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {

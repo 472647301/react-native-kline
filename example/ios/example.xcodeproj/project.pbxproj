@@ -16,6 +16,7 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* exampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* exampleTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		916E9951251B3FFF0070AB7A /* KLineInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916E9950251B3FFF0070AB7A /* KLineInfoView.xib */; };
 		A99B5A638731473B2F753C83 /* libPods-example-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D782D2085FCB15CB7765BC24 /* libPods-example-tvOSTests.a */; };
 		ABEB460EB454A0DF33DAEE9F /* libPods-example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E43B9EBB4056ABB8E8C96DB /* libPods-example.a */; };
 		AF38EFB885B6DAA0BBEDEFA4 /* libPods-example-exampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90866C4A31FF6F61D6199F22 /* libPods-example-exampleTests.a */; };
@@ -59,6 +60,7 @@
 		6703FFB0E222A838CD65B311 /* Pods-example-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-example-tvOSTests/Pods-example-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = example/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		90866C4A31FF6F61D6199F22 /* libPods-example-exampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-example-exampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		916E9950251B3FFF0070AB7A /* KLineInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = KLineInfoView.xib; path = ../../ios/KLineChart/View/KLineInfoView.xib; sourceTree = "<group>"; };
 		9E43B9EBB4056ABB8E8C96DB /* libPods-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F36A745F2E88004C420B176 /* Pods-example-exampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example-exampleTests.release.xcconfig"; path = "Target Support Files/Pods-example-exampleTests/Pods-example-exampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		D782D2085FCB15CB7765BC24 /* libPods-example-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-example-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,7 +163,6 @@
 				6703FFB0E222A838CD65B311 /* Pods-example-tvOSTests.debug.xcconfig */,
 				E51BBEB78252F20413F6D837 /* Pods-example-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,6 +176,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				916E9950251B3FFF0070AB7A /* KLineInfoView.xib */,
 				13B07FAE1A68108700A75B9A /* example */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* exampleTests */,
@@ -340,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				916E9951251B3FFF0070AB7A /* KLineInfoView.xib in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

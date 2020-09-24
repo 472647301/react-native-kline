@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol XytKLineDelegate <NSObject>
+@protocol KLineDelegate <NSObject>
 
 @required
 - (void) onMoreKLineData;
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KLineChartView : UIView
 
-@property (nonatomic, weak) id<XytKLineDelegate> delegate;
+@property (nonatomic, weak) id<KLineDelegate> delegate;
 
 @property(nonatomic,strong) NSArray<KLineModel *> *datas;
 
