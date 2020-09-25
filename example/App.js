@@ -19,6 +19,7 @@ export default class App extends Component {
   };
 
   onMoreKLineData = async (params) => {
+    console.log(params.id);
     const res = await axios.get(
       'http://api.zhuwenbo.cc/v1/kline?type=MIN_1&symbol=btcusdt&to=' +
         params.id,

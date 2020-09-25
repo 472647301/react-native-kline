@@ -39,6 +39,9 @@
     if (_chartView == nil) {
         return;
     }
+    if (_requestStatus == YES) {
+        return;
+    }
     KLineModel * item = [[KLineModel alloc] initWithDict:list.firstObject];
     KLineModel *model = [KLineStateManager manager].datas.firstObject;
     if(model != nil && [KLineStateManager manager].datas.count > 1) {
@@ -86,12 +89,16 @@
     }
     NSArray  *models = [KLineStateManager manager].datas;
     NSMutableArray *newDatas = [NSMutableArray arrayWithArray:models];
-    for (int i = 0; i < list.count; i++) {
-        NSDictionary *item = list[i];
+    NSArray *newList = [[list reverseObjectEnumerator] allObjects];
+    for (int i = 0; i < newList.count; i++) {
+        NSDictionary *item = newList[i];
         [newDatas addObject:[[KLineModel alloc] initWithDict:item]];
     }
     [DataUtil calculate:newDatas];
     [KLineStateManager manager].datas = [newDatas copy];
+    if (_requestStatus == YES) {
+        _requestStatus = NO;
+    }
 }
 
 - (void)setDatas:(NSArray *)datas {
@@ -105,7 +112,7 @@
       [list addObject:[[KLineModel alloc] initWithDict:item]];
     }
     [DataUtil calculate:list];
-    [KLineStateManager manager].datas = list;
+    [KLineStateManager manager].datas = [[list reverseObjectEnumerator] allObjects];
 }
 
 - (void)setLocales:(NSArray *)locales {
@@ -147,6 +154,10 @@
     if (self.onRNMoreKLineData == nil) {
         return;
     }
+    if (_requestStatus == YES) {
+        return;
+    }
+    _requestStatus = YES;
     KLineModel *model = [KLineStateManager manager].datas.lastObject;
     self.onRNMoreKLineData(@{@"id":@(model.id)});
 }

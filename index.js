@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { UIManager, Platform } from "react-native";
+import { UIManager } from "react-native";
 import { requireNativeComponent, findNodeHandle } from "react-native";
 
 let byronController = undefined;
@@ -8,9 +8,6 @@ const ByronKline = requireNativeComponent("ByronKline");
 export const dispatchByronKline = (event = "init", list = []) => {
   if (!byronController) {
     return;
-  }
-  if (event !== "init" && Platform.OS === "ios") {
-    list.reverse();
   }
   UIManager.dispatchViewManagerCommand(
     findNodeHandle(byronController),
@@ -43,10 +40,6 @@ const KlineComponent = (props, forwardedRef) => {
     byronController = ref;
     forwardedRef && forwardedRef(ref);
   };
-
-  if (Platform.OS === "ios") {
-    props.datas.reverse();
-  }
 
   useEffect(() => {
     dispatchByronKline();

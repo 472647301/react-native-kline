@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSNumber *pricePrecision;
 @property (nonatomic, strong) NSNumber *volumePrecision;
 
+@property (nonatomic, assign) BOOL requestStatus;
+
 @property(nonatomic,strong) KLineChartView *chartView;
 
 @end

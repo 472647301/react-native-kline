@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">KLineChartLib</string>
+    <string name="k_index_k">K:</string>
+    <string name="k_index_d">D:</string>
+    <string name="k_index_j">J:</string>
+    <string name="k_index_macd">MACD:</string>
+    <string name="k_index_dif">DIF:</string>
+    <string name="k_index_dea">DEA:</string>
+    <string name="k_index_vol">VOL:</string>
+    <string name="k_index_vol_ma">MA%d:</string>
+    <string name="k_index_boll">BOLL:</string>
+    <string name="k_index_ub">UB:</string>
+    <string name="k_index_lb">LB:</string>
+    <string name="k_index_ma_formater">MA%d:</string>
+</resources>
