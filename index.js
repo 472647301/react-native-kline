@@ -62,6 +62,8 @@ ByronKlineChart.defaultProps = {
   indicators: [],
   pricePrecision: 2,
   volumePrecision: 2,
+  increaseColor: "#00BD9A",
+  decreaseColor: "#FF6960",
 };
 
 export default ByronKlineChart;

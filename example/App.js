@@ -10,7 +10,10 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, Text, SafeAreaView} from 'react-native';
-import ByronKlineChart, {dispatchByronKline} from 'react-native-kline';
+import ByronKlineChart, {
+  dispatchByronKline,
+  KLineIndicator,
+} from 'react-native-kline';
 import axios from 'axios';
 
 export default class App extends Component {
@@ -19,9 +22,9 @@ export default class App extends Component {
   };
 
   onMoreKLineData = async (params) => {
-    console.log(params.id);
+    console.log(' >> onMoreKLineData :',params);
     const res = await axios.get(
-      'http://api.zhuwenbo.cc/v1/kline?type=MIN_1&symbol=btcusdt&to=' +
+      'http://api.zhuwenbo.cc/v1/kline?type=MIN_30&symbol=btcusdt&to=' +
         params.id,
     );
     if (!res || !res.data) {
@@ -32,7 +35,7 @@ export default class App extends Component {
 
   async initKlineChart() {
     const res = await axios.get(
-      'http://api.zhuwenbo.cc/v1/kline?type=MIN_1&symbol=btcusdt',
+      'http://api.zhuwenbo.cc/v1/kline?type=MIN_30&symbol=btcusdt',
     );
     if (!res || !res.data) {
       return;
@@ -47,7 +50,7 @@ export default class App extends Component {
       ws.send(
         JSON.stringify({
           event: 'subscribe',
-          data: 'MIN_1/BTCUSDT',
+          data: 'MIN_30/BTCUSDT',
         }),
       );
     };
@@ -57,7 +60,7 @@ export default class App extends Component {
         if (!msg || !this.state.datas.length) {
           return;
         }
-        if (msg.type !== 'MIN_1/BTCUSDT') {
+        if (msg.type !== 'MIN_30/BTCUSDT') {
           return;
         }
         dispatchByronKline('update', [msg.data]);
@@ -75,6 +78,7 @@ export default class App extends Component {
           style={{height: 400}}
           datas={this.state.datas}
           onMoreKLineData={this.onMoreKLineData}
+          indicators={[]}
         />
       </SafeAreaView>
     );

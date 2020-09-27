@@ -73,6 +73,8 @@ export interface ByronKlineProps {
    * 周期
    */
   period?: number;
+  increaseColor?: string;
+  decreaseColor?: string;
 }
 
 declare class ByronKlineComponent extends React.Component<ByronKlineProps> {}
