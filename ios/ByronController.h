@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSArray *indicators;
 @property (nonatomic, strong) NSNumber *pricePrecision;
 @property (nonatomic, strong) NSNumber *volumePrecision;
+@property (nonatomic, strong) NSString *increaseColor;
+@property (nonatomic, strong) NSString *decreaseColor;
 
 @property (nonatomic, assign) BOOL requestStatus;
 

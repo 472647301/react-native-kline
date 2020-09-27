@@ -38,6 +38,8 @@ RCT_EXPORT_VIEW_PROPERTY(locales, NSArray);
 RCT_EXPORT_VIEW_PROPERTY(indicators, NSArray);
 RCT_EXPORT_VIEW_PROPERTY(pricePrecision, NSNumber);
 RCT_EXPORT_VIEW_PROPERTY(volumePrecision, NSNumber);
+RCT_EXPORT_VIEW_PROPERTY(increaseColor, NSString);
+RCT_EXPORT_VIEW_PROPERTY(decreaseColor, NSString);
 RCT_EXPORT_VIEW_PROPERTY(onRNMoreKLineData, RCTBubblingEventBlock);
 
 @end

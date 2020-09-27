@@ -4,6 +4,7 @@
 #import "KLineChartView.h"
 #import "KLineStateManager.h"
 #import "KLineModel.h"
+#import "KLineChart/Style/ChartStyle.h"
 
 @implementation ByronController
 
@@ -15,23 +16,14 @@
     _chartView = [[KLineChartView alloc] initWithFrame:self.bounds];
     _chartView.delegate = self;
     [KLineStateManager manager].klineChart = _chartView;
-    [KLineStateManager manager].mainState = MainStateNONE;
-    [KLineStateManager manager].secondaryState = SecondaryStateNONE;
-    if (_datas != nil) {
-        [self setDatas:_datas];
-    }
-    if (_locales != nil) {
-        [self setLocales:_locales];
-    }
-    if (_indicators != nil) {
-        [self setIndicators:_indicators];
-    }
-    if (_pricePrecision != nil) {
-        [self setPricePrecision:_pricePrecision];
-    }
-    if (_volumePrecision != nil) {
-        [self setVolumePrecision:_volumePrecision];
-    }
+    [self initKLineState];
+    [self setDatas:_datas];
+    [self setLocales:_locales];
+    [self setIndicators:_indicators];
+    [self setPricePrecision:_pricePrecision];
+    [self setVolumePrecision:_volumePrecision];
+    [self setIncreaseColor:_increaseColor];
+    [self setDecreaseColor:_decreaseColor];
     [self addSubview:_chartView];
 }
 
@@ -102,6 +94,9 @@
 }
 
 - (void)setDatas:(NSArray *)datas {
+    if (datas == nil || datas.count == 0) {
+        return;
+    }
     _datas = datas;
     if (_chartView == nil) {
         return;
@@ -116,6 +111,9 @@
 }
 
 - (void)setLocales:(NSArray *)locales {
+    if (locales == nil || locales.count == 0) {
+        return;
+    }
     _locales = locales;
     if (_chartView == nil) {
         return;
@@ -124,8 +122,15 @@
 }
 
 - (void)setIndicators:(NSArray *)indicators {
+    if (indicators == nil || indicators.count == 0) {
+        return;
+    }
     _indicators = indicators;
     if (_chartView == nil) {
+        return;
+    }
+    if (indicators.count == 0) {
+        [self initKLineState];
         return;
     }
     for (int i = 0; i < indicators.count; i++) {
@@ -135,6 +140,9 @@
 }
 
 - (void)setPricePrecision:(NSNumber *)pricePrecision {
+    if (pricePrecision == nil) {
+        return;
+    }
     _pricePrecision = pricePrecision;
     if (_chartView == nil) {
         return;
@@ -143,11 +151,22 @@
 }
 
 - (void)setVolumePrecision:(NSNumber *)volumePrecision {
+    if (volumePrecision == nil) {
+        return;
+    }
     _volumePrecision = volumePrecision;
     if (_chartView == nil) {
         return;
     }
     [KLineStateManager manager].volumePrecision = volumePrecision;
+}
+
+- (void)setIncreaseColor:(NSString *)increaseColor {
+    
+}
+
+- (void)setDecreaseColor:(NSString *)decreaseColor {
+    
 }
 
 - (void)onMoreKLineData {
@@ -160,6 +179,16 @@
     _requestStatus = YES;
     KLineModel *model = [KLineStateManager manager].datas.lastObject;
     self.onRNMoreKLineData(@{@"id":@(model.id)});
+}
+
+- (void)initKLineState {
+    if (_chartView == nil) {
+      return;
+    }
+    [KLineStateManager manager].mainState = MainStateNONE;
+    [KLineStateManager manager].secondaryState = SecondaryStateNONE;
+    [KLineStateManager manager].isLine = NO;
+    _chartView.volState = VolStateNONE;
 }
 
 - (void)changeKLineState:(NSNumber *)index {
