@@ -1,14 +1,14 @@
 ## react-native-kline
 
-[![npm version](http://img.shields.io/npm/v/react-native-slider.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
-[![npm downloads](http://img.shields.io/npm/dm/react-native-slider.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
-[![npm licence](http://img.shields.io/npm/l/react-native-slider.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![npm version](http://img.shields.io/npm/v/react-native-kline.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/react-native-kline.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/react-native-kline.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
 [![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
 
 
 
-<img src="https://raw.githubusercontent.com/jeanregisser/react-native-kline/master/screenshots/ios.png" width="375">
-<img src="https://raw.githubusercontent.com/jeanregisser/react-native-kline/master/screenshots/android.png" width="360">
+<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/ios.png?raw=true" width="375">
+<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/android.png?raw=true" width="360">
 
 
 
