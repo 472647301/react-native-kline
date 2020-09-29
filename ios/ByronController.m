@@ -94,37 +94,29 @@
 }
 
 - (void)setDatas:(NSArray *)datas {
-    if (datas == nil || datas.count == 0) {
-        return;
-    }
     _datas = datas;
-    if (_chartView == nil) {
+    if (_chartView == nil || _datas.count < 1) {
         return;
     }
-    NSMutableArray *list = [NSMutableArray arrayWithCapacity:datas.count];
-    for (int i = 0; i < datas.count; i++) {
-      NSDictionary *item = datas[i];
+    NSArray *newDatas = [[datas reverseObjectEnumerator] allObjects];
+    NSMutableArray *list = [NSMutableArray arrayWithCapacity:newDatas.count];
+    for (int i = 0; i < newDatas.count; i++) {
+      NSDictionary *item = newDatas[i];
       [list addObject:[[KLineModel alloc] initWithDict:item]];
     }
     [DataUtil calculate:list];
-    [KLineStateManager manager].datas = [[list reverseObjectEnumerator] allObjects];
+    [KLineStateManager manager].datas = list;
 }
 
 - (void)setLocales:(NSArray *)locales {
-    if (locales == nil || locales.count == 0) {
-        return;
-    }
     _locales = locales;
-    if (_chartView == nil) {
+    if (_chartView == nil || _locales.count < 1) {
         return;
     }
     [KLineStateManager manager].locales = locales;
 }
 
 - (void)setIndicators:(NSArray *)indicators {
-    if (indicators == nil || indicators.count == 0) {
-        return;
-    }
     _indicators = indicators;
     if (_chartView == nil) {
         return;

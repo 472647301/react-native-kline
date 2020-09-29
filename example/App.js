@@ -13,7 +13,7 @@ import {StyleSheet, Text, SafeAreaView} from 'react-native';
 import ByronKlineChart, {
   dispatchByronKline,
   KLineIndicator,
-  CandleHollow
+  CandleHollow,
 } from 'react-native-kline';
 import axios from 'axios';
 
@@ -69,10 +69,11 @@ export default class App extends Component {
   };
 
   onWebSocketMessage = (evt) => {
+    // console.log(' >> onWebSocketMessage:', evt.data);
     const {type, symbol} = this.state;
     const msg = JSON.parse(evt.data);
     const _type = `${type}/${symbol}`;
-    if (!msg || msg.type !== _type) {
+    if (!msg || msg.type !== _type || !msg.data) {
       return;
     }
     dispatchByronKline('update', [msg.data]);
@@ -80,9 +81,9 @@ export default class App extends Component {
 
   componentDidMount() {
     this.initKlineChart();
-    // this.ws = new WebSocket(WsUrl);
-    // this.ws.onopen = this.onWebSocketOpen;
-    // this.ws.onmessage = this.onWebSocketMessage;
+    this.ws = new WebSocket(WsUrl);
+    this.ws.onopen = this.onWebSocketOpen;
+    this.ws.onmessage = this.onWebSocketMessage;
   }
 
   render() {
@@ -96,9 +97,9 @@ export default class App extends Component {
           datas={this.state.datas}
           onMoreKLineData={this.onMoreKLineData}
           indicators={[KLineIndicator.MainMA, KLineIndicator.VolumeShow]}
-          limitTextColor={'#FF2D55'}
-          mainBackgroundColor={'#ffffff'}
-          candleHollow={CandleHollow.ALL_HOLLOW}
+          // limitTextColor={'#FF2D55'}
+          // mainBackgroundColor={'#ffffff'}
+          // candleHollow={CandleHollow.ALL_HOLLOW}
         />
       </SafeAreaView>
     );

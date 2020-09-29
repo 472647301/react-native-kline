@@ -1,20 +1,144 @@
-# react-native-kline
+## react-native-kline
 
-## Getting started
+[![npm version](http://img.shields.io/npm/v/react-native-slider.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/react-native-slider.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/react-native-slider.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
 
-`$ npm install react-native-kline --save`
 
-## Usage
-```javascript
-import ByronKline from 'react-native-kline';
 
-// TODO: What to do with the module?
-ByronKline;
+<img src="https://raw.githubusercontent.com/jeanregisser/react-native-kline/master/screenshots/ios.png" width="375">
+<img src="https://raw.githubusercontent.com/jeanregisser/react-native-kline/master/screenshots/android.png" width="360">
+
+
+
+## Install
+
+```shell
+npm i --save react-native-kline
 ```
 
-## Prop
+## Usage
+```jsx
+import React, {Component} from 'react';
+import {StyleSheet, Text, SafeAreaView} from 'react-native';
+import ByronKlineChart, {
+  dispatchByronKline,
+  KLineIndicator,
+  CandleHollow,
+} from 'react-native-kline';
+import axios from 'axios';
 
-| Attribute name | Value type | Attribute implication | Platform |
+const BaseUrl = 'http://api.zhuwenbo.cc/v1';
+const WsUrl = 'ws://49.233.210.12:1998/websocket';
+
+export default class App extends Component {
+  state = {
+    datas: [],
+    symbol: 'BTCUSDT',
+    type: 'MIN_15',
+  };
+
+  ws = null;
+
+  onMoreKLineData = async (params) => {
+    console.log(' >> onMoreKLineData :', params);
+    const {symbol, type} = this.state;
+    const res = await axios.get(
+      `${BaseUrl}/kline?type=${type}&symbol=${symbol}&to=${params.id}`,
+    );
+    if (!res || !res.data) {
+      return;
+    }
+    dispatchByronKline('add', res.data);
+  };
+
+  async initKlineChart() {
+    const {symbol, type} = this.state;
+    const res = await axios.get(
+      `${BaseUrl}/kline?type=${type}&symbol=${symbol}`,
+    );
+    if (!res || !res.data) {
+      return;
+    }
+    this.setState({datas: res.data});
+  }
+
+  subscribeKLine = (event = 'subscribe') => {
+    if (!this.ws) {
+      return;
+    }
+    const {type, symbol} = this.state;
+    const data = {
+      event: event,
+      data: `${type}/${symbol}`,
+    };
+    this.ws.send(JSON.stringify(data));
+  };
+
+  onWebSocketOpen = () => {
+    this.subscribeKLine();
+  };
+
+  onWebSocketMessage = (evt) => {
+    // console.log(' >> onWebSocketMessage:', evt.data);
+    const {type, symbol} = this.state;
+    const msg = JSON.parse(evt.data);
+    const _type = `${type}/${symbol}`;
+    if (!msg || msg.type !== _type || !msg.data) {
+      return;
+    }
+    dispatchByronKline('update', [msg.data]);
+  };
+
+  componentDidMount() {
+    this.initKlineChart();
+    this.ws = new WebSocket(WsUrl);
+    this.ws.onopen = this.onWebSocketOpen;
+    this.ws.onmessage = this.onWebSocketMessage;
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.welcome}>☆ByronKline example☆</Text>
+        <Text style={styles.instructions}>STATUS: loaded</Text>
+        <Text style={styles.welcome}>☆☆☆</Text>
+        <ByronKlineChart
+          style={{height: 400}}
+          datas={this.state.datas}
+          onMoreKLineData={this.onMoreKLineData}
+          indicators={[KLineIndicator.MainMA, KLineIndicator.VolumeShow]}
+          // limitTextColor={'#FF2D55'}
+          // mainBackgroundColor={'#ffffff'}
+          // candleHollow={CandleHollow.ALL_HOLLOW}
+        />
+      </SafeAreaView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
+```
+
+## Props
+
+| Prop | Type | Description | Platform |
 | ------ | ------ | ------ | ------ |  
 | datas | `` Array<KLineBar> `` |  K线历史数据 | Android iOS  |
 | locales | `` Array<string> `` |  多语言配置 | Android iOS |
