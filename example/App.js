@@ -13,19 +13,27 @@ import {StyleSheet, Text, SafeAreaView} from 'react-native';
 import ByronKlineChart, {
   dispatchByronKline,
   KLineIndicator,
+  CandleHollow
 } from 'react-native-kline';
 import axios from 'axios';
+
+const BaseUrl = 'http://api.zhuwenbo.cc/v1';
+const WsUrl = 'ws://49.233.210.12:1998/websocket';
 
 export default class App extends Component {
   state = {
     datas: [],
+    symbol: 'BTCUSDT',
+    type: 'MIN_15',
   };
 
+  ws = null;
+
   onMoreKLineData = async (params) => {
-    console.log(' >> onMoreKLineData :',params);
+    console.log(' >> onMoreKLineData :', params);
+    const {symbol, type} = this.state;
     const res = await axios.get(
-      'http://api.zhuwenbo.cc/v1/kline?type=MIN_30&symbol=btcusdt&to=' +
-        params.id,
+      `${BaseUrl}/kline?type=${type}&symbol=${symbol}&to=${params.id}`,
     );
     if (!res || !res.data) {
       return;
@@ -34,8 +42,9 @@ export default class App extends Component {
   };
 
   async initKlineChart() {
+    const {symbol, type} = this.state;
     const res = await axios.get(
-      'http://api.zhuwenbo.cc/v1/kline?type=MIN_30&symbol=btcusdt',
+      `${BaseUrl}/kline?type=${type}&symbol=${symbol}`,
     );
     if (!res || !res.data) {
       return;
@@ -43,29 +52,37 @@ export default class App extends Component {
     this.setState({datas: res.data});
   }
 
+  subscribeKLine = (event = 'subscribe') => {
+    if (!this.ws) {
+      return;
+    }
+    const {type, symbol} = this.state;
+    const data = {
+      event: event,
+      data: `${type}/${symbol}`,
+    };
+    this.ws.send(JSON.stringify(data));
+  };
+
+  onWebSocketOpen = () => {
+    this.subscribeKLine();
+  };
+
+  onWebSocketMessage = (evt) => {
+    const {type, symbol} = this.state;
+    const msg = JSON.parse(evt.data);
+    const _type = `${type}/${symbol}`;
+    if (!msg || msg.type !== _type) {
+      return;
+    }
+    dispatchByronKline('update', [msg.data]);
+  };
+
   componentDidMount() {
     this.initKlineChart();
-    const ws = new WebSocket('ws://49.233.210.12:1998/websocket');
-    ws.onopen = () => {
-      ws.send(
-        JSON.stringify({
-          event: 'subscribe',
-          data: 'MIN_30/BTCUSDT',
-        }),
-      );
-    };
-    ws.onmessage = (ev) => {
-      try {
-        const msg = JSON.parse(ev.data);
-        if (!msg || !this.state.datas.length) {
-          return;
-        }
-        if (msg.type !== 'MIN_30/BTCUSDT') {
-          return;
-        }
-        dispatchByronKline('update', [msg.data]);
-      } catch (e) {}
-    };
+    // this.ws = new WebSocket(WsUrl);
+    // this.ws.onopen = this.onWebSocketOpen;
+    // this.ws.onmessage = this.onWebSocketMessage;
   }
 
   render() {
@@ -78,7 +95,10 @@ export default class App extends Component {
           style={{height: 400}}
           datas={this.state.datas}
           onMoreKLineData={this.onMoreKLineData}
-          indicators={[]}
+          indicators={[KLineIndicator.MainMA, KLineIndicator.VolumeShow]}
+          limitTextColor={'#FF2D55'}
+          mainBackgroundColor={'#ffffff'}
+          candleHollow={CandleHollow.ALL_HOLLOW}
         />
       </SafeAreaView>
     );
@@ -88,8 +108,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {

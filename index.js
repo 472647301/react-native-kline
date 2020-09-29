@@ -16,6 +16,13 @@ export const dispatchByronKline = (event = "init", list = []) => {
   );
 };
 
+export const CandleHollow = {
+  NONE_HOLLOW: 0,
+  ALL_HOLLOW: 1,
+  DECREASE_HOLLOW: 2,
+  INCREASE_HOLLOW: 3,
+};
+
 export const KLineIndicator = {
   MainMA: 0,
   MainBOLL: 1,

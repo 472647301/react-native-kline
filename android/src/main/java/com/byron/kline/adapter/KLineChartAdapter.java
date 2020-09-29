@@ -99,20 +99,6 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         resetData(data, true);
     }
 
-    public void addFooterData(List<T> data) {
-        if (data == null || data.size() == 0) {
-            return;
-        }
-        datas.addAll(0, data);
-        this.dataCount = datas.size();
-        if (dataCount > 0) {
-            points = dataTools.calculate(datas);
-        } else {
-            points = new float[]{};
-        }
-        notifyDataSetChanged();
-    }
-
     /**
      * 通知K线显示位置发和变化,需要重置时需先设置resetShowPosition为true后调用此方法
      */
