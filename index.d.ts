@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ViewProps } from "react-native";
 
 export interface KLineBar {
   amount: number;
@@ -493,7 +494,7 @@ export interface ByronKlineProps {
 }
 
 declare class ByronKlineComponent extends React.Component<
-  Partial<ByronKlineProps>
+  Partial<ByronKlineProps> & ViewProps
 > {}
 export default class ByronKlineChart extends ByronKlineComponent {}
 export declare function dispatchByronKline(
