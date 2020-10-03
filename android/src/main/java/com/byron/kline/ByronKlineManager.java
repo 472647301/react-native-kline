@@ -1523,9 +1523,6 @@ public class ByronKlineManager extends ViewGroupManager {
             initChartView();
         }
         if (options.event.equals("update") && _adapter != null) {
-            if (_requestStatus) {
-                return;
-            }
             List<KChartBean> datas = _adapter.getDatas();
             if (datas.size() < 2) {
                 return;
