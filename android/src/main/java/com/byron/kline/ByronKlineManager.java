@@ -172,6 +172,9 @@ public class ByronKlineManager extends ViewGroupManager {
                 )
         );
         _mContainer = layout.findViewById(R.id.container);
+        _adapter = new KLineChartAdapter();
+        _mContainer.setVisibility(View.VISIBLE);
+        _chartView = _mContainer.findViewById(R.id.kLineChartView);
         return layout;
     }
 
@@ -1435,6 +1438,8 @@ public class ByronKlineManager extends ViewGroupManager {
             return;
         }
         _indicators = indicators;
+        Log.d("_chartView", String.valueOf(_chartView == null));
+        Log.d("_adapter", String.valueOf(_adapter == null));
         if (_chartView == null || _adapter == null) {
             return;
         }
@@ -1444,7 +1449,7 @@ public class ByronKlineManager extends ViewGroupManager {
             return;
         }
         for (int i = 0; i < list.size(); i++) {
-            Object status = list.get(i);
+            String status = String.valueOf(list.get(i));
             changeKLineState(status);
         }
     }
@@ -1570,116 +1575,9 @@ public class ByronKlineManager extends ViewGroupManager {
     }
 
     private void initChartView() {
-        _adapter = new KLineChartAdapter();
-        _mContainer.setVisibility(View.VISIBLE);
-        _chartView = _mContainer.findViewById(R.id.kLineChartView);
         DisplayMetrics dm2 = _mContext.getResources().getDisplayMetrics();
         _chartView.setGridColumns(5).setGridRows(5).setOverScrollRange(dm2.widthPixels / 5);
         _chartView.setAdapter(_adapter);
-        setIndicators(_chartView, _indicators);
-        setVolumePrecision(_chartView, _volumePrecision);
-        setPricePrecision(_chartView, _pricePrecision);
-        setIncreaseColor(_chartView, _increaseColor);
-        setDecreaseColor(_chartView, _decreaseColor);
-        setMainBackgroundColor(_chartView, _mainBackgroundColor);
-        setSelectedXLabelBackgroundColor(_chartView, _selectedXLabelBackgroundColor);
-        setPriceLabelInLineTextColor(_chartView, _priceLabelInLineTextColor);
-        setPriceLabelInLineTextSize(_chartView, _priceLabelInLineTextSize);
-        setSelectedLabelTextColor(_chartView, _selectedLabelTextColor);
-        setSelectedLabelTextSize(_chartView, _selectedLabelTextSize);
-        setPriceLabelInLineBoxMarginRight(_chartView, _priceLabelInLineBoxMarginRight);
-        setPriceLabelInLineShapeWidth(_chartView, _priceLabelInLineShapeWidth);
-        setPriceLabelInLineShapeHeight(_chartView, _priceLabelInLineShapeHeight);
-        setPriceLabelInLineBoxHeight(_chartView, _priceLabelInLineBoxHeight);
-        setPriceLabelInLineBoxPadding(_chartView, _priceLabelInLineBoxPadding);
-        setPriceLabelInLineBoxShapeTextMargin(_chartView, _priceLabelInLineBoxShapeTextMargin);
-        setPriceLabelInLineClickable(_chartView, _priceLabelInLineClickable);
-        setPriceLabelInLineBoxBackgroundColor(_chartView, _priceLabelInLineBoxBackgroundColor);
-        setPriceLabelRightBackgroundColor(_chartView, _priceLabelRightBackgroundColor);
-        setPriceLabelInLineBoxBorderColor(_chartView, _priceLabelInLineBoxBorderColor);
-        setPriceLabelInLineBoxBorderWidth(_chartView, _priceLabelInLineBoxBorderWidth);
-        setPriceLabelInLineBoxRadius(_chartView, _priceLabelInLineBoxRadius);
-        setPriceLineRightLabelBackGroundAlpha(_chartView, _priceLineRightLabelBackGroundAlpha);
-        setPriceLabelRightTextColor(_chartView, _priceLabelRightTextColor);
-        setPriceLineRightColor(_chartView, _priceLineRightColor);
-        setPriceLineWidth(_chartView, _priceLineWidth);
-        setPriceLineColor(_chartView, _priceLineColor);
-        setPriceLineDotSolidWidth(_chartView, _priceLineDotSolidWidth);
-        setPriceLineDotStrokeWidth(_chartView, _priceLineDotStrokeWidth);
-        setSelectedXLineWidth(_chartView, _selectedXLineWidth);
-        setSelectedYLineWidth(_chartView, _selectedYLineWidth);
-        setSelectedXLineColor(_chartView, _selectedXLineColor);
-        setSelectedYLineColor(_chartView, _selectedYLineColor);
-        setSelectedYColor(_chartView, _selectedYColor);
-        setSelectedCrossBigColor(_chartView, _selectedCrossBigColor);
-        setSelectedCrossPointRadius(_chartView, _selectedCrossPointRadius);
-        setSelectedCrossPointColor(_chartView, _selectedCrossPointColor);
-        setSelectedShowCrossPoint(_chartView, _selectedShowCrossPoint);
-        setSelectedPriceBoxBackgroundColor(_chartView, _selectedPriceBoxBackgroundColor);
-        setSelectedInfoTextSize(_chartView, _selectedInfoTextSize);
-        setSelectedPriceBoxHorizontalPadding(_chartView, _selectedPriceBoxHorizontalPadding);
-        setSelectedPriceBoxVerticalPadding(_chartView, _selectedPriceBoxVerticalPadding);
-        setSelectedInfoBoxPadding(_chartView, _selectedInfoBoxPadding);
-        setSelectedInfoBoxMargin(_chartView, _selectedInfoBoxMargin);
-        setSelectedInfoBoxTextColor(_chartView, _selectedInfoBoxTextColor);
-        setSelectedInfoBoxBorderColor(_chartView, _selectedInfoBoxBorderColor);
-        setSelectedInfoBoxBackgroundColor(_chartView, _selectedInfoBoxBackgroundColor);
-        setSelectedLabelBorderWidth(_chartView, _selectedLabelBorderWidth);
-        setSelectedLabelBorderColor(_chartView, _selectedLabelBorderColor);
-        setBackgroundFillTopColor(_chartView, _backgroundFillTopColor);
-        setBackgroundFillBottomColor(_chartView, _backgroundFillBottomColor);
-        setTimeLineColor(_chartView, _timeLineColor);
-        setTimeLineFillTopColor(_chartView, _timeLineFillTopColor);
-        setTimeLineFillBottomColor(_chartView, _timeLineFillBottomColor);
-        setTimeLineEndPointColor(_chartView, _timeLineEndPointColor);
-        setTimeLineEndRadius(_chartView, _timeLineEndRadius);
-        setSelectedDateBoxVerticalPadding(_chartView, _selectedDateBoxVerticalPadding);
-        setSelectedDateBoxHorizontalPadding(_chartView, _selectedDateBoxHorizontalPadding);
-        setMainLegendMarginTop(_chartView, _mainLegendMarginTop);
-        setLegendMarginLeft(_chartView, _legendMarginLeft);
-        setBetterXLabel(_chartView, _betterXLabel);
-        setLabelTextSize(_chartView, _labelTextSize);
-        setLabelTextColor(_chartView, _labelTextColor);
-        setYLabelAlign(_chartView, _yLabelAlign);
-        setBetterSelectedXLabel(_chartView, _betterSelectedXLabel);
-        setCommonTextSize(_chartView, _commonTextSize);
-        setMainMarginTop(_chartView, _mainMarginTop);
-        setPaddingBottom(_chartView, _paddingBottom);
-        setChildPaddingTop(_chartView, _childPaddingTop);
-        setCommonTextColor(_chartView, _commonTextColor);
-        setLineWidth(_chartView, _lineWidth);
-        setCandleWidth(_chartView, _candleWidth);
-        setCandleLineWidth(_chartView, _candleLineWidth);
-        setLimitTextColor(_chartView, _limitTextColor);
-        setCandleHollow(_chartView, _candleHollow);
-        setGridLineWidth(_chartView, _gridLineWidth);
-        setGridLineColor(_chartView, _gridLineColor);
-        setGridLineRows(_chartView, _gridLineRows);
-        setGridLineColumns(_chartView, _gridLineColumns);
-        setMacdStrokeWidth(_chartView, _macdStrokeWidth);
-        setMacdIncreaseColor(_chartView, _macdIncreaseColor);
-        setMacdDecreaseColor(_chartView, _macdDecreaseColor);
-        setMacdWidth(_chartView, _macdWidth);
-        setDifColor(_chartView, _difColor);
-        setDeaColor(_chartView, _deaColor);
-        setMacdColor(_chartView, _macdColor);
-        setWr1Color(_chartView, _wr1Color);
-        setWr2Color(_chartView, _wr2Color);
-        setWr3Color(_chartView, _wr3Color);
-        setKColor(_chartView, _kColor);
-        setDColor(_chartView, _dColor);
-        setJColor(_chartView, _jColor);
-        setRsi1Color(_chartView, _rsi1Color);
-        setRsi2Color(_chartView, _rsi2Color);
-        setRsi3Color(_chartView, _rsi3Color);
-        setMa1Color(_chartView, _ma1Color);
-        setMa2Color(_chartView, _ma2Color);
-        setMa3Color(_chartView, _ma3Color);
-        setVolMa1Color(_chartView, _volMa1Color);
-        setVolMa2Color(_chartView, _volMa2Color);
-        setVolLegendColor(_chartView, _volLegendColor);
-        setVolLineChartColor(_chartView, _volLineChartColor);
-        setVolLegendMarginTop(_chartView, _volLegendMarginTop);
         _chartView.setSlidListener(new SlidListener() {
             @Override
             public void onSlidLeft() {
