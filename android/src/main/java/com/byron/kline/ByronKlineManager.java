@@ -1410,7 +1410,6 @@ public class ByronKlineManager extends ViewGroupManager {
 
     @ReactProp(name = "locales")
     public void setLocales(View view, ReadableArray locales) {
-        Log.d("setLocales", "value: " + locales);
         if (locales == null) {
             return;
         }
@@ -1433,13 +1432,10 @@ public class ByronKlineManager extends ViewGroupManager {
 
     @ReactProp(name = "indicators")
     public void setIndicators(View view, ReadableArray indicators) {
-        Log.d("setIndicators", "value: " + indicators);
         if (indicators == null) {
             return;
         }
         _indicators = indicators;
-        Log.d("_chartView", String.valueOf(_chartView == null));
-        Log.d("_adapter", String.valueOf(_adapter == null));
         if (_chartView == null || _adapter == null) {
             return;
         }
@@ -1546,7 +1542,7 @@ public class ByronKlineManager extends ViewGroupManager {
             }
         }
         if (options.event.equals("add") && _adapter != null) {
-            _adapter.resetData(options.list);
+            _adapter.addFooterData(options.list);
             if (_requestStatus) {
                 _requestStatus = false;
             }

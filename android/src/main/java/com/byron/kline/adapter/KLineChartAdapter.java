@@ -90,6 +90,22 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
         notifyDataSetChanged();
     }
 
+    public void addFooterData(List<T> data) {
+        if (data == null || data.size() == 0) {
+            return;
+        }
+        notifyDataWillChanged();
+        datas.addAll(0, data);
+        this.dataCount = datas.size();
+        if (dataCount > 0) {
+            points = dataTools.calculate(datas);
+        } else {
+            points = new float[]{};
+        }
+        this.resetShowPosition = false;
+        notifyDataSetChanged();
+    }
+
     /**
      * 重置K线数据
      *
