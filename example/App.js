@@ -17,8 +17,8 @@ import ByronKlineChart, {
 } from 'react-native-kline';
 import axios from 'axios';
 
-const BaseUrl = 'http://api.zhuwenbo.cc/v1';
-const WsUrl = 'ws://49.233.210.12:1998/websocket';
+const BaseUrl = 'http://49.233.210.12:3000';
+const WsUrl = 'ws://49.233.210.12:3000/ws';
 
 export default class App extends Component {
   state = {
@@ -35,10 +35,10 @@ export default class App extends Component {
     const res = await axios.get(
       `${BaseUrl}/kline?type=${type}&symbol=${symbol}&to=${params.id}`,
     );
-    if (!res || !res.data) {
+    if (!res || !res.data.data) {
       return;
     }
-    dispatchByronKline('add', res.data);
+    dispatchByronKline('add', res.data.data);
   };
 
   async initKlineChart() {
@@ -46,10 +46,10 @@ export default class App extends Component {
     const res = await axios.get(
       `${BaseUrl}/kline?type=${type}&symbol=${symbol}`,
     );
-    if (!res || !res.data) {
+    if (!res || !res.data.data) {
       return;
     }
-    this.setState({datas: res.data});
+    this.setState({datas: res.data.data});
   }
 
   subscribeKLine = (event = 'subscribe') => {
@@ -69,7 +69,7 @@ export default class App extends Component {
   };
 
   onWebSocketMessage = (evt) => {
-    // console.log(' >> onWebSocketMessage:', evt.data);
+    console.log(' >> onWebSocketMessage:', evt.data);
     const {type, symbol} = this.state;
     const msg = JSON.parse(evt.data);
     const _type = `${type}/${symbol}`;
