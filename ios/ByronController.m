@@ -45,7 +45,6 @@
         kLineEntity.close = item.close;
         kLineEntity.vol = item.vol;
         kLineEntity.amount = item.amount;
-        kLineEntity.count = item.count;
         if (limit < differ) {
             kLineEntity.id = model.id;
             NSArray  *models = [KLineStateManager manager].datas;
@@ -177,7 +176,7 @@
     [KLineStateManager manager].mainState = MainStateNONE;
     [KLineStateManager manager].secondaryState = SecondaryStateNONE;
     [KLineStateManager manager].isLine = NO;
-    _chartView.volState = VolStateNONE;
+//    _chartView.volState = VolStateNONE;
 }
 
 - (void)changeKLineState:(NSNumber *)index {

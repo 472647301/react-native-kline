@@ -10,80 +10,82 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, Text, SafeAreaView} from 'react-native';
-import ByronKlineChart, {
-  dispatchByronKline,
-  KLineIndicator,
-  CandleHollow,
-} from 'react-native-kline';
+import ByronKlineChart from 'react-native-kline';
+import {dispatchByronKline, KLineIndicator} from 'react-native-kline';
 import axios from 'axios';
-
-const BaseUrl = 'http://49.233.210.12:3000';
-const WsUrl = 'ws://49.233.210.12:3000/ws';
+import pako from 'pako';
 
 export default class App extends Component {
   state = {
-    datas: [],
-    symbol: 'BTCUSDT',
-    type: 'MIN_15',
+    list: [],
   };
 
-  ws = null;
-
-  onMoreKLineData = async (params) => {
-    console.log(' >> onMoreKLineData :', params);
-    const {symbol, type} = this.state;
-    const res = await axios.get(
-      `${BaseUrl}/kline?type=${type}&symbol=${symbol}&to=${params.id}`,
-    );
-    if (!res || !res.data.data) {
-      return;
-    }
-    dispatchByronKline('add', res.data.data);
-  };
+  onMoreKLineData = (params) => {};
 
   async initKlineChart() {
-    const {symbol, type} = this.state;
-    const res = await axios.get(
-      `${BaseUrl}/kline?type=${type}&symbol=${symbol}`,
-    );
-    if (!res || !res.data.data) {
+    const res = await axios
+      .get(
+        'https://www.okex.com/priapi/v5/market/candles?instId=BTC-USDT&bar=1m&limit=1000',
+      )
+      .catch((err) => {
+        console.log(err);
+        return;
+      });
+    console.log(res);
+    if (!res || !res.data || !res.data.data || !res.data.data.length) {
       return;
     }
-    this.setState({datas: res.data.data});
+    const list = [];
+    for (let i = 0; i < res.data.data.length; i++) {
+      const item = res.data.data[i];
+      // 返回值分别为[timestamp,open,high,low,close,volume]
+      list.push({
+        amount: 0,
+        open: Number(item[1]),
+        close: Number(item[4]),
+        high: Number(item[2]),
+        id: parseInt(Number(item[0]) / 1000),
+        low: Number(item[3]),
+        vol: Number(item[5]),
+      });
+    }
+    list.sort((l, r) => (l.time > r.time ? 1 : -1));
+    this.setState({list});
+    this.subscribeKLine();
   }
 
-  subscribeKLine = (event = 'subscribe') => {
-    if (!this.ws) {
-      return;
-    }
-    const {type, symbol} = this.state;
-    const data = {
-      event: event,
-      data: `${type}/${symbol}`,
+  subscribeKLine() {
+    const ws = new WebSocket('wss://wspri.okex.com:8443/ws/v5/public');
+    ws.onopen = () => {
+      ws.send(
+        JSON.stringify({
+          op: 'subscribe',
+          args: [{channel: 'candle1m', instId: 'BTC-USDT'}],
+        }),
+      );
     };
-    this.ws.send(JSON.stringify(data));
-  };
-
-  onWebSocketOpen = () => {
-    this.subscribeKLine();
-  };
-
-  onWebSocketMessage = (evt) => {
-    console.log(' >> onWebSocketMessage:', evt.data);
-    const {type, symbol} = this.state;
-    const msg = JSON.parse(evt.data);
-    const _type = `${type}/${symbol}`;
-    if (!msg || msg.type !== _type || !msg.data) {
-      return;
-    }
-    dispatchByronKline('update', [msg.data]);
-  };
+    ws.onmessage = (ev) => {
+      console.log(ev.data);
+      try {
+        const data = JSON.parse(ev.data);
+        const item = data.data[0];
+        dispatchByronKline('update', [
+          {
+            amount: 0,
+            open: Number(item[1]),
+            close: Number(item[4]),
+            high: Number(item[2]),
+            id: parseInt(Number(item[0]) / 1000),
+            low: Number(item[3]),
+            vol: Number(item[5]),
+          },
+        ]);
+      } catch (err) {}
+    };
+  }
 
   componentDidMount() {
     this.initKlineChart();
-    this.ws = new WebSocket(WsUrl);
-    this.ws.onopen = this.onWebSocketOpen;
-    this.ws.onmessage = this.onWebSocketMessage;
   }
 
   render() {
@@ -93,13 +95,10 @@ export default class App extends Component {
         <Text style={styles.instructions}>STATUS: loaded</Text>
         <Text style={styles.welcome}>☆☆☆</Text>
         <ByronKlineChart
-          style={{height: 400}}
-          datas={this.state.datas}
+          style={{flex: 1}}
+          datas={this.state.list}
           onMoreKLineData={this.onMoreKLineData}
-          indicators={[KLineIndicator.MainMA, KLineIndicator.VolumeShow]}
-          // limitTextColor={'#FF2D55'}
-          // mainBackgroundColor={'#ffffff'}
-          // candleHollow={CandleHollow.ALL_HOLLOW}
+          indicators={[KLineIndicator.MainMA]}
         />
       </SafeAreaView>
     );

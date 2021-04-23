@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { UIManager } from "react-native";
+import { UIManager, Platform } from "react-native";
 import { requireNativeComponent, findNodeHandle } from "react-native";
 
 let byronController = undefined;
@@ -11,7 +11,9 @@ export const dispatchByronKline = (event = "init", list = []) => {
   }
   UIManager.dispatchViewManagerCommand(
     findNodeHandle(byronController),
-    UIManager.getViewManagerConfig("ByronKline").Commands.byronController,
+    Platform.OS === "android"
+      ? "ByronKline"
+      : UIManager.getViewManagerConfig("ByronKline").Commands.byronController,
     [{ event, list }]
   );
 };
