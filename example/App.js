@@ -99,6 +99,7 @@ export default class App extends Component {
           datas={this.state.list}
           onMoreKLineData={this.onMoreKLineData}
           indicators={[KLineIndicator.MainMA]}
+          // mainBackgroundColor={'#ffffff'}
         />
       </SafeAreaView>
     );

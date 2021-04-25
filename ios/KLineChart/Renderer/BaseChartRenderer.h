@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)drawTopText:(CGContextRef)context
           curPoint:(KLineModel *)curPoint;
 
--(void)drawBg:(CGContextRef)context;
+-(void)drawBg:(CGContextRef)context bgColor:(NSString*)color;
 
 -(void)drawChart:(CGContextRef)context
         lastPoit:(KLineModel *)lastPoint

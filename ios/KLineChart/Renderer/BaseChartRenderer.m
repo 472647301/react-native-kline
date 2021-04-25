@@ -48,11 +48,11 @@
           curPoint:(KLineModel *)curPoint {
     
 }
--(void)drawBg:(CGContextRef)context {
+-(void)drawBg:(CGContextRef)context bgColor:(NSString*)color {
     CGContextClipToRect(context, _chartRect);
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0,1};
-    NSArray *colors = @[(__bridge id)[UIColor rgb_r:0x18 g:0x18 b:0x1A alpha:1].CGColor, (__bridge id)[UIColor rgb_r:0x18 g:0x18 b:0x1A alpha:1].CGColor];
+    NSArray *colors = @[(__bridge id)[UIColor colorWithHexString:color].CGColor, (__bridge id)[UIColor colorWithHexString:color].CGColor];
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef) colors, locations);
     CGColorSpaceRelease(colorSpace);
     CGPoint start = CGPointMake(_chartRect.size.width / 2, CGRectGetMinY(_chartRect));

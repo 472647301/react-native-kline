@@ -12,6 +12,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainChartRenderer : BaseChartRenderer
+
+@property(nonatomic,assign) NSString* mainBackgroundColor;
+
 - (instancetype)initWithMaxValue:(CGFloat)maxValue
                         minValue:(CGFloat)minValue
                        chartRect:(CGRect)chartRect

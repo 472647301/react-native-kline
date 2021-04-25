@@ -78,7 +78,7 @@
     CGFloat x2 = curX + self.candleWidth + ChartStyle_canldeMargin;
     CGFloat y2 = [self getY:lastValue];
     CGContextSetLineWidth(context, 1);
-    CGContextSetStrokeColorWithColor(context, ChartColors_kLineColor.CGColor);
+    CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:_mainBackgroundColor].CGColor);
     CGContextMoveToPoint(context, x1, y1);
     CGContextAddCurveToPoint(context, (x1 + x2) / 2.0, y1,  (x1 + x2) / 2.0, y2, x2, y2);
     CGContextDrawPath(context, kCGPathFillStroke);

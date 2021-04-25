@@ -97,6 +97,10 @@
     self.painterView.direction = direction;
 }
 
+- (void)setMainBackgroundColor:(NSString *)mainBackgroundColor {
+    self.painterView.mainBackgroundColor = mainBackgroundColor;
+}
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
