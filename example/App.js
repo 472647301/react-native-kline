@@ -13,7 +13,6 @@ import {StyleSheet, Text, SafeAreaView} from 'react-native';
 import ByronKlineChart from 'react-native-kline';
 import {dispatchByronKline, KLineIndicator} from 'react-native-kline';
 import axios from 'axios';
-import pako from 'pako';
 
 export default class App extends Component {
   state = {
@@ -49,7 +48,7 @@ export default class App extends Component {
         vol: Number(item[5]),
       });
     }
-    list.sort((l, r) => (l.time > r.time ? 1 : -1));
+    list.sort((l, r) => (l.id > r.id ? 1 : -1));
     this.setState({list});
     this.subscribeKLine();
   }

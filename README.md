@@ -9,18 +9,14 @@
 _仓库Android源码来源于[icechao/KlineChart](https://github.com/icechao/KlineChart). iOS源码来源于[h-js/KLine](https://github.com/h-js/KLine)_
 
 
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/ios.png?raw=true" width="375">
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/android.png?raw=true" width="360">
-
-
+<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/ios.png?raw=true" width="320">
+<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/android.png?raw=true" width="320">
 
 ## Install
 
 ```shell
 npm i --save react-native-kline
 ```
-
-### `iOS Settings`[⬇️](#ios-settings)
 
 ## Examples
 
@@ -151,11 +147,3 @@ npm run ios
 | volLegendColor | string |  交易量图例颜色 | Android  |
 | volLineChartColor | string |  设置当成交量视图显示为线时的颜色 | Android  |
 | volLegendMarginTop | number | 交易量图例距离量视图上边缘的距离  | Android  |
-
-## iOS Settings
-
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/QQ20200930-105738@2x-min.png?raw=true">
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/QQ20200930-105930@2x-min.png?raw=true">
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/QQ20200930-110013@2x-min.png?raw=true">
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/QQ20200930-110137@2x-min.png?raw=true">
-<img src="https://github.com/472647301/react-native-kline/blob/master/screenshots/QQ20200930-110230@2x-min.png?raw=true">
