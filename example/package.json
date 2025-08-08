@@ -1,32 +1,35 @@
 {
-  "name": "example",
+  "name": "react-native-kline-example",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "build:android": "react-native build-android --extra-params \"--no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a\"",
+    "build:ios": "react-native build-ios --mode Debug"
   },
   "dependencies": {
-    "axios": "^0.20.0",
-    "pako": "^2.0.3",
-    "react": "16.13.1",
-    "react-native": "0.63.2",
-    "react-native-kline": "link:../"
+    "axios": "^1.11.0",
+    "dayjs": "^1.11.13",
+    "react": "19.0.0",
+    "react-native": "0.79.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/runtime": "^7.11.2",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "babel-jest": "^26.3.0",
-    "eslint": "^7.9.0",
-    "jest": "^26.4.2",
-    "metro-react-native-babel-preset": "^0.63.0",
-    "react-test-renderer": "16.13.1"
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "18.0.0",
+    "@react-native-community/cli-platform-android": "18.0.0",
+    "@react-native-community/cli-platform-ios": "18.0.0",
+    "@react-native/babel-preset": "0.79.2",
+    "@react-native/metro-config": "0.79.2",
+    "@react-native/typescript-config": "0.79.2",
+    "@types/react": "^19.0.0",
+    "react-native-builder-bob": "^0.40.13",
+    "react-native-monorepo-config": "^0.1.9"
   },
-  "jest": {
-    "preset": "react-native"
+  "engines": {
+    "node": ">=18"
   }
 }
