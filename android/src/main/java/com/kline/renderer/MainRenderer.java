@@ -258,7 +258,8 @@ public class MainRenderer extends BaseRenderer {
 
         int index = view.getSelectedIndex();
 
-        strings[0] = view.getTime(index);
+        // 详情面板展示完整时间
+        strings[0] = view.getTimeStr(index);
         strings[1] = getValueFormatter().format(values[Constants.INDEX_OPEN]);
         strings[2] = getValueFormatter().format(values[Constants.INDEX_HIGH]);
         strings[3] = getValueFormatter().format(values[Constants.INDEX_LOW]);

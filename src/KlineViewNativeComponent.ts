@@ -494,10 +494,12 @@ export interface NativeProps extends ViewProps {
   maxMinCalcModel?: Int32;
   /**
    * 滑动边界监听 - 滑动到最左边
+   * @todo ⚠️注意会多次触发
    */
   onSlidLeft?: BubblingEventHandler<null> | null;
   /**
    * 滑动边界监听 - 滑动到最右边
+   * @todo ⚠️注意会多次触发
    */
   onSlidRight?: BubblingEventHandler<null> | null;
 }

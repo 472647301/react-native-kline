@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
  * @version      : V1
  *************************************************************************/
 public class DateUtil {
-    public static SimpleDateFormat longTimeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    public static SimpleDateFormat longTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static SimpleDateFormat HHMMTimeFormat = new SimpleDateFormat("HH:mm");
     public static SimpleDateFormat MMddHHmmTimeFormat = new SimpleDateFormat("MM/dd HH:mm");
     public static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat("yyyy/MM/dd");

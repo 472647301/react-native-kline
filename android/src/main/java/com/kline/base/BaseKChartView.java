@@ -1,5 +1,7 @@
 package com.kline.base;
 
+import static com.kline.utils.DateUtil.longTimeFormat;
+
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -2114,6 +2116,10 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
      */
     public String getTime(int index) {
         return dateTimeFormatter.format(dataAdapter.getDate(index));
+    }
+
+    public String getTimeStr(int index) {
+      return longTimeFormat.format(dataAdapter.getDate(index));
     }
 
     /**

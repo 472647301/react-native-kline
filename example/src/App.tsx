@@ -37,7 +37,8 @@ export default function App() {
         onSlidLeft={onSlidLeft}
         onSlidRight={onSlidRight}
         kLineState={KLineState.K_LINE}
-        dateTimeFormatter="hh:mm"
+        // hh:mm 12小时制 HH:mm 24小时制
+        dateTimeFormatter="HH:mm"
       />
     </View>
   );

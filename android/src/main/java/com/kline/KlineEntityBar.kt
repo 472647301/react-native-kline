@@ -4,7 +4,7 @@ import com.kline.model.KLineEntity
 
 class KlineEntityBar: KLineEntity() {
   override fun getDate(): Long {
-    return date
+    return date * 1000
   }
 
   override fun getOpenPrice(): Float {

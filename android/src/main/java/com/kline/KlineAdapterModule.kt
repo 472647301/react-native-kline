@@ -16,12 +16,12 @@ class KlineAdapterModule(reactContext: ReactApplicationContext) :
 
   private fun fetchEntity(data: ReadableMap): KlineEntityBar {
     val entity = KlineEntityBar()
-    entity.open = (data.getString("open")?.toFloat() ?: 0) as Float
-    entity.high = (data.getString("high")?.toFloat() ?: 0) as Float
-    entity.low = (data.getString("low")?.toFloat() ?: 0) as Float
-    entity.close = (data.getString("close")?.toFloat() ?: 0) as Float
-    entity.volume = (data.getString("volume")?.toFloat() ?: 0) as Float
-    entity.date = (data.getString("date")?.toLong() ?: 0)
+    entity.open = data.getDouble("open").toFloat()
+    entity.high = data.getDouble("high").toFloat()
+    entity.low = data.getDouble("low").toFloat()
+    entity.close = data.getDouble("close").toFloat()
+    entity.volume = data.getDouble("vol").toFloat()
+    entity.date = data.getDouble("id").toLong()
     return entity
   }
 
