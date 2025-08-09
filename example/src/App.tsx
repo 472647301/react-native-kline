@@ -10,7 +10,7 @@ export default function App() {
 
   const initKLineList = async () => {
     setLoading(true);
-    const res = await fetch_kline_list('DAY_1');
+    const res = await fetch_kline_list('MIN_15');
     setLoading(false);
     if (!res.length) return;
     kLineRef.current?.resetData(res, true, true);

@@ -7,6 +7,8 @@
 
 #import "RCTFabricComponentsPlugins.h"
 
+#import "KLineStateManager.h"
+
 using namespace facebook::react;
 
 @interface KlineView () <RCTKlineViewViewProtocol>
@@ -32,19 +34,29 @@ using namespace facebook::react;
 
     self.contentView = _view;
   }
-
+  _klineWidth = _view.bounds.size.width;
+  _klineHeight = _view.bounds.size.height;
+  if(_klineCharView == nil) {
+    _klineCharView = [[KLineChartView alloc] initWithFrame:_view.bounds];
+  }
+  [KLineStateManager manager].klineChart = self.klineCharView;
+  [_view addSubview:self.klineCharView];
   return self;
 }
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<KlineViewProps const>(_props);
-    const auto &newViewProps = *std::static_pointer_cast<KlineViewProps const>(props);
-
-    if (oldViewProps.color != newViewProps.color) {
-        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.color.c_str()];
-        [_view setBackgroundColor:[self hexStringToColor:colorToConvert]];
-    }
+  const auto &oldViewProps = *std::static_pointer_cast<KlineViewProps const>(_props);
+  const auto &newViewProps = *std::static_pointer_cast<KlineViewProps const>(props);
+  if (_klineWidth != _view.bounds.size.width || _klineHeight != _view.bounds.size.height) {
+    _klineWidth = _view.bounds.size.width;
+    _klineHeight = _view.bounds.size.height;
+    _klineCharView.frame = _view.bounds;
+  }
+//    if (oldViewProps.color != newViewProps.color) {
+//        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.color.c_str()];
+//        [_view setBackgroundColor:[self hexStringToColor:colorToConvert]];
+//    }
 
     [super updateProps:props oldProps:oldProps];
 }

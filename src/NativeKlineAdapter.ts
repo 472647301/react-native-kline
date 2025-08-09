@@ -1,20 +1,21 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
+import type { Double, Float } from 'react-native/Libraries/Types/CodegenTypes';
 import type { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
 export interface KLineEntity {
-  /** 毫秒值 */
-  date: string;
+  /** 秒时间戳 */
+  id: Double;
   /** 开盘价 */
-  open: string;
+  open: Float;
   /** 最高价 */
-  high: string;
+  high: Float;
   /** 最低价 */
-  low: string;
+  low: Float;
   /** 收盘价 */
-  close: string;
+  close: Float;
   /** 成交量 */
-  volume: string;
+  vol: Float;
 }
 
 export interface Spec extends TurboModule {
