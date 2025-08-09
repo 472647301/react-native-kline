@@ -1,7 +1,5 @@
 package com.kline.adapter;
 
-import android.util.Log;
-
 import com.kline.model.KLineEntity;
 import com.kline.utils.DataTools;
 
