@@ -1,6 +1,7 @@
 package com.kline
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,9 @@ import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.uimanager.ViewGroupManager
+import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.uimanager.annotations.ReactProp
+import com.facebook.react.viewmanagers.KlineViewManagerDelegate
 import com.facebook.react.viewmanagers.KlineViewManagerInterface
 import com.kline.adapter.KLineChartAdapter
 import com.kline.callback.SlidListener
@@ -29,8 +32,13 @@ import java.util.Date
 class KlineViewManager : ViewGroupManager<LinearLayout>(),
   KlineViewManagerInterface<LinearLayout> {
 
+  private val mDelegate: ViewManagerDelegate<LinearLayout> = KlineViewManagerDelegate(this)
   private var _container: LinearLayout? = null
   private var _chartView: KChartView? = null
+
+  override fun getDelegate(): ViewManagerDelegate<LinearLayout> {
+    return mDelegate
+  }
 
   override fun getName(): String {
     return NAME
@@ -136,7 +144,7 @@ class KlineViewManager : ViewGroupManager<LinearLayout>(),
 
   @ReactProp(name = "hideMarketInfoBox")
   override fun setHideMarketInfoBox(view: LinearLayout?, value: Boolean) {
-    if (value) _chartView?.hideMarketInfo()
+    _chartView?.setHideMarketInfo(value)
   }
 
   @ReactProp(name = "gridColumns")
@@ -410,16 +418,19 @@ class KlineViewManager : ViewGroupManager<LinearLayout>(),
     _chartView?.setSelectedXLabelBorderColor(value.toColorInt())
   }
 
-  @Suppress("CAST_NEVER_SUCCEEDS")
-  @ReactProp(name = "selectedInfoLabel")
-  override fun setSelectedInfoLabel(view: LinearLayout?, value: ReadableArray?) {
-    if (value == null) return
-    val list = ArrayList<String>()
+  @ReactProp(name = "selectedInfoLabels")
+  override fun setSelectedInfoLabels(view: LinearLayout?, value: ReadableArray?) {
+    if (value == null || value.size() != 8) return
+    val stringList = mutableListOf<String>()
     for (i in 0 until value.size()) {
-      val item = value.getString(i) ?: continue
-      list.add(item)
+      // Ensure the element at index i is a String before attempting to get it
+      if (value.getType(i) == com.facebook.react.bridge.ReadableType.String) {
+        value.getString(i)?.let {
+          stringList.add(it)
+        }
+      }
     }
-    _chartView?.setSelectedInfoLabels(list as Array<out String>?)
+    _chartView?.setSelectedInfoLabels(stringList.toTypedArray())
   }
 
   @ReactProp(name = "crossFollowTouch")

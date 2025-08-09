@@ -48,12 +48,22 @@ class KlineAdapterModule(reactContext: ReactApplicationContext) :
 
   override fun addLast(data: ReadableMap?, resetShowPosition: Boolean?) {
     if (data == null) return
-    val entity = fetchEntity(data)
     if (resetShowPosition != null) {
-      KlineViewManager.adapter.addLast(entity, resetShowPosition)
+      KlineViewManager.adapter.addLast(fetchEntity(data), resetShowPosition)
     } else {
-      KlineViewManager.adapter.addLast(entity)
+      KlineViewManager.adapter.addLast(fetchEntity(data))
     }
+  }
+
+  override fun appendData(list: ReadableArray?) {
+    if (list == null) return
+    val bars = ArrayList<KLineEntity>()
+    for (i in 0 until list.size()) {
+      val item = list.getMap(i) ?: continue
+      val entity = fetchEntity(item)
+      bars.add(entity)
+    }
+    KlineViewManager.adapter.appendData(bars)
   }
 
   override fun changeItem(position: Double, data: ReadableMap?) {

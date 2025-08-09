@@ -37,6 +37,11 @@ export interface Spec extends TurboModule {
    */
   addLast(data: KLineEntity, resetShowPosition?: boolean): void;
   /**
+   * @name 向前面追加多个数据
+   * @param list K线数据
+   */
+  appendData(list: KLineEntity[]): void;
+  /**
    * @name 改变某个点的值
    * @param position 索引值
    * @param data K线数据

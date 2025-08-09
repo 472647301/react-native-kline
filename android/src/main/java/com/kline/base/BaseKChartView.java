@@ -1,6 +1,6 @@
 package com.kline.base;
 
-import static com.kline.utils.DateUtil.longTimeFormat;
+import static com.kline.utils.DateUtil.MMddHHmmTimeFormat;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -2119,7 +2119,7 @@ public abstract class BaseKChartView extends ScrollAndScaleView {
     }
 
     public String getTimeStr(int index) {
-      return longTimeFormat.format(dataAdapter.getDate(index));
+      return MMddHHmmTimeFormat.format(dataAdapter.getDate(index));
     }
 
     /**

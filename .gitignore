@@ -84,6 +84,3 @@ android/generated
 
 # React Native Nitro Modules
 nitrogen/
-
-example/src/api.ts
-example/src/data.ts

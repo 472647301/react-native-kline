@@ -2068,6 +2068,15 @@ public class KChartView extends BaseKChartView {
         return this;
     }
 
+    public KChartView setHideMarketInfo(boolean isHide) {
+      if (isHide) {
+        hideSelectedInfoBox();
+      } else {
+        hideMarketInfo = false;
+      }
+      return this;
+    }
+
     /**
      * 选中十字线X轴坐标连框纵向内边距
      *

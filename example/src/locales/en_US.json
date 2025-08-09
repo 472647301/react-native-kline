@@ -1,0 +1,18 @@
+{
+  "时间": "Time",
+  "开": "Open",
+  "高": "High",
+  "低": "Low",
+  "收": "Colse",
+  "涨跌额": "Amount",
+  "涨跌幅": "Amplitude",
+  "成交量": "Trading",
+  "分时图": "Time",
+  "K线图": "KLine",
+  "日线": "Daily",
+  "周线": "Weekly",
+  "月线": "Monthly",
+  "{{period}}分钟": "{{period}} Min",
+  "{{period}}小时": "{{period}} Hour",
+  "深度图": "Depth"
+}

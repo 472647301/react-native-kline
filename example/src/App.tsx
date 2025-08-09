@@ -1,57 +1,42 @@
-import { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { KLineChart, KLineState } from 'react-native-kline';
-import type { KLineChartRef, KLineChartProps } from 'react-native-kline';
-import { fetch_kline_list } from './api';
+import { useEffect, useState } from 'react';
+import { RouterContainer } from './router';
+import { getLocales } from 'react-native-localize';
+import { initReactI18next } from 'react-i18next';
+import enUS from './locales/en_US.json';
+import i18n from 'i18next';
+
+const isZh = getLocales()[0]?.languageCode.indexOf('zh') !== -1;
+
+i18n.use(initReactI18next);
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
-  const kLineRef = useRef<KLineChartRef>(null);
+  const [loading, setLoading] = useState(true);
 
-  const initKLineList = async () => {
+  const initI18n = async () => {
     setLoading(true);
-    const res = await fetch_kline_list('MIN_15');
+    const zhCN = Object.keys(enUS).reduce<Record<string, string>>(
+      (pre, cur) => {
+        pre[cur] = cur;
+        return pre;
+      },
+      {}
+    );
+    await i18n.init({
+      debug: __DEV__,
+      lng: isZh ? 'zh_CN' : 'rn_US',
+      resources: {
+        zh_CN: { translation: zhCN },
+        en_US: { translation: enUS },
+      },
+    });
     setLoading(false);
-    if (!res.length) return;
-    kLineRef.current?.resetData(res, true, true);
   };
 
   useEffect(() => {
-    initKLineList();
+    initI18n();
   }, []);
 
-  const onSlidLeft: KLineChartProps['onSlidLeft'] = (event) => {
-    console.log('onSlidLeft', event);
-  };
+  if (loading) return <></>;
 
-  const onSlidRight: KLineChartProps['onSlidRight'] = (event) => {
-    console.log('onSlidRight', event);
-  };
-
-  return (
-    <View style={styles.container}>
-      <KLineChart
-        ref={kLineRef}
-        loading={loading}
-        style={styles.box}
-        onSlidLeft={onSlidLeft}
-        onSlidRight={onSlidRight}
-        kLineState={KLineState.K_LINE}
-        // hh:mm 12小时制 HH:mm 24小时制
-        dateTimeFormatter="HH:mm"
-      />
-    </View>
-  );
+  return <RouterContainer />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: '100%',
-    height: 320,
-  },
-});

@@ -55,7 +55,7 @@ export interface NativeProps extends ViewProps {
    */
   volChartStatues?: Int32;
   /**
-   * 隐藏信息框
+   * 是否隐藏信息框 默认false
    */
   hideMarketInfoBox?: boolean;
   /**
@@ -258,7 +258,7 @@ export interface NativeProps extends ViewProps {
    * 设置选中框的文本
    * 时间 开 高 低 收 涨跌额 涨跌幅 成交量 组成的文字数组
    */
-  selectedInfoLabel?: Array<string>;
+  selectedInfoLabels?: string[];
   /**
    * 设置十字线跟随手势移动/显示收盘价
    * @enum `CrossFollowTouch`
