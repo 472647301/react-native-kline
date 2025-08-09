@@ -24,10 +24,36 @@ RCT_EXPORT_MODULE()
   NSMutableArray *datas = [NSMutableArray arrayWithCapacity:newList.count];
   for (int i = 0; i < newList.count; i++) {
     NSDictionary *item = newList[i];
-    [datas addObject:[[KLineModel alloc] initWithDict:item]];
+    KLineModel   *bar = [[KLineModel alloc] init];
+    bar.open = [item[@"open"] floatValue];
+    bar.high = [item[@"high"] floatValue];
+    bar.low = [item[@"low"] floatValue];
+    bar.close = [item[@"close"] floatValue];
+    bar.vol = [item[@"vol"] floatValue];
+    bar.id = [item[@"id"] doubleValue];
+    [datas addObject:bar];
   }
   [DataUtil calculate:datas];
   [KLineStateManager manager].datas = datas;
+}
+
+- (void)appendData:(NSArray *)list {
+  NSArray  *models = [KLineStateManager manager].datas;
+  NSMutableArray *newDatas = [NSMutableArray arrayWithArray:models];
+  NSArray *newList = [[list reverseObjectEnumerator] allObjects];
+  for (int i = 0; i < newList.count; i++) {
+      NSDictionary *item = newList[i];
+      KLineModel   *bar = [[KLineModel alloc] init];
+      bar.open = [item[@"open"] floatValue];
+      bar.high = [item[@"high"] floatValue];
+      bar.low = [item[@"low"] floatValue];
+      bar.close = [item[@"close"] floatValue];
+      bar.vol = [item[@"vol"] floatValue];
+      bar.id = [item[@"id"] doubleValue];
+      [newDatas addObject:bar];
+  }
+  [DataUtil calculate:newDatas];
+  [KLineStateManager manager].datas = [newDatas copy];
 }
 
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
