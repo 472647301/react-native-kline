@@ -90,6 +90,55 @@
     self.painterView.direction = direction;
 }
 
+-(void)setGridColumns:(NSInteger)gridColumns {
+  _gridColumns = gridColumns;
+  self.painterView.gridColumns = gridColumns;
+}
+
+-(void)setGridRows:(NSInteger)gridRows {
+  _gridRows = gridRows;
+  self.painterView.gridRows = gridRows;
+}
+
+-(void)setFromat:(NSString *)fromat {
+  _fromat = fromat;
+  self.painterView.fromat = fromat;
+}
+
+-(void)setBackgroundFillTopColor:(UIColor *)backgroundFillTopColor{
+  _backgroundFillTopColor = backgroundFillTopColor;
+  self.painterView.backgroundFillTopColor = backgroundFillTopColor;
+}
+
+-(void)setBackgroundFillBottomColor:(UIColor *)backgroundFillBottomColor{
+  _backgroundFillBottomColor = backgroundFillBottomColor;
+  self.painterView.backgroundFillBottomColor = backgroundFillBottomColor;
+}
+
+-(void)setTimeLineColor:(UIColor *)timeLineColor{
+  _timeLineColor = timeLineColor;
+  self.painterView.timeLineColor = timeLineColor;
+}
+
+-(void)setTimeLineFillTopColor:(UIColor *)timeLineFillTopColor{
+  _timeLineFillTopColor = timeLineFillTopColor;
+  self.painterView.timeLineFillTopColor = timeLineFillTopColor;
+}
+
+-(void)setTimeLineFillBottomColor:(UIColor *)timeLineFillBottomColor{
+  _timeLineFillBottomColor = timeLineFillBottomColor;
+  self.painterView.timeLineFillBottomColor = timeLineFillBottomColor;
+}
+
+-(void)setTimeLineEndPointColor:(UIColor *)timeLineEndPointColor{
+  _timeLineEndPointColor = timeLineEndPointColor;
+  self.painterView.timeLineEndPointColor = timeLineEndPointColor;
+}
+
+-(void)setTimeLineEndRadius:(CGFloat)timeLineEndRadius{
+  _timeLineEndRadius = timeLineEndRadius;
+  self.painterView.timeLineEndRadius = timeLineEndRadius;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

@@ -46,6 +46,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign) KLineDirection direction;
 
+@property(nonatomic,assign) NSInteger gridColumns;
+
+@property(nonatomic,assign) NSInteger gridRows;
+
+@property(nonatomic,strong) NSString* fromat;
+
+@property(nonatomic,strong) UIColor* backgroundFillTopColor;
+
+@property(nonatomic,strong) UIColor* backgroundFillBottomColor;
+
+@property(nonatomic,strong) UIColor* timeLineColor;
+
+@property(nonatomic,strong) UIColor* timeLineFillTopColor;
+
+@property(nonatomic,strong) UIColor* timeLineFillBottomColor;
+
+@property(nonatomic,strong) UIColor* timeLineEndPointColor;
+
+@property(nonatomic,assign) CGFloat timeLineEndRadius;
+
 @end
 
 NS_ASSUME_NONNULL_END

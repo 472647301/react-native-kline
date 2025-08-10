@@ -120,6 +120,7 @@ export function KLinePage() {
           onSlidRight={onSlidRight}
           dateTimeFormatter={dateTimeFormatter[period]}
           selectedInfoLabels={labels.map((str) => `${t(str)}   `)}
+          // backgroundFillTopColor='#1677ff'
         />
         {loading ? (
           <View style={styles.loading}>

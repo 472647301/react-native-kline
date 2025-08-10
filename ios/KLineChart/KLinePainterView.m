@@ -44,9 +44,6 @@
 
 @property(nonatomic,assign) CGFloat candleWidth;
 
-//var fromat: String = "yyyy-MM-dd"
-@property(nonatomic,copy) NSString *fromat;
-
 @end
 
 @implementation KLinePainterView
@@ -85,6 +82,55 @@
     [self setNeedsDisplay];
 }
 
+-(void)setGridColumns:(NSInteger)gridColumns {
+  _gridColumns = gridColumns;
+  [self setNeedsDisplay];
+}
+
+-(void)setGridRows:(NSInteger)gridRows {
+  _gridRows = gridRows;
+  [self setNeedsDisplay];
+}
+
+-(void)setFromat:(NSString *)fromat {
+  _fromat = fromat;
+  [self setNeedsDisplay];
+}
+
+-(void)setBackgroundFillTopColor:(UIColor *)backgroundFillTopColor{
+  _backgroundFillTopColor = backgroundFillTopColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setBackgroundFillBottomColor:(UIColor *)backgroundFillBottomColor{
+  _backgroundFillBottomColor = backgroundFillBottomColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setTimeLineColor:(UIColor *)timeLineColor{
+  _timeLineColor = timeLineColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setTimeLineFillTopColor:(UIColor *)timeLineFillTopColor{
+  _timeLineFillTopColor = timeLineFillTopColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setTimeLineFillBottomColor:(UIColor *)timeLineFillBottomColor{
+  _timeLineFillBottomColor = timeLineFillBottomColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setTimeLineEndPointColor:(UIColor *)timeLineEndPointColor{
+  _timeLineEndPointColor = timeLineEndPointColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setTimeLineEndRadius:(CGFloat)timeLineEndRadius{
+  _timeLineEndRadius = timeLineEndRadius;
+  [self setNeedsDisplay];
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
                         datas:(NSArray<KLineModel *> *)datas
@@ -105,6 +151,11 @@
         self.mainState = mainState;
         self.secondaryState = secondaryState;
         self.candleWidth = ChartStyle_candleWidth * self.scaleX;
+        self.gridColumns = ChartStyle_gridColumns;
+        self.gridRows = ChartStyle_gridRows;
+        self.fromat = @"MM-dd HH:mm";
+      self.backgroundFillTopColor = [UIColor colorWithCGColor:ChartColors_bgColor.CGColor];
+      self.backgroundFillBottomColor = [UIColor colorWithCGColor:ChartColors_bgColor.CGColor];
     }
     return self;
 }
@@ -115,7 +166,6 @@
     if(context != NULL) {
         [self divisionRect];
         [self calculateValue];
-        [self calculateFormats];
         [self initRenderer];
         [self drawBgColor:context rect:rect];
         [self drawGrid:context];
@@ -267,20 +317,6 @@
     }
 }
 
--(void)calculateFormats {
-    if(self.datas.count < 2) { return; }
-    NSTimeInterval fristtime = 0;
-    NSTimeInterval secondTime = 0;
-    NSTimeInterval time = ABS(fristtime - secondTime);
-    if(time >= 24 * 60 * 60 * 28) {
-        self.fromat = @"yyyy-MM";
-    } else if(time >= 24 * 60 * 60) {
-        self.fromat = @"yyyy-MM-dd";
-    } else {
-        self.fromat = @"MM-dd HH:mm";
-    }
-}
-
 -(void)initRenderer {
     _mainRenderer = [[MainChartRenderer alloc] initWithMaxValue:_mMainMaxValue minValue:_mMainMinValue chartRect:_mainRect candleWidth:_candleWidth topPadding:ChartStyle_topPadding isLine:_isLine state:_mainState];
     if(_volState != VolStateNONE) {
@@ -292,7 +328,7 @@
 }
 
 -(void)drawBgColor:(CGContextRef)context rect:(CGRect)rect {
-     CGContextSetFillColorWithColor(context, ChartColors_bgColor.CGColor);
+     CGContextSetFillColorWithColor(context, [_backgroundFillTopColor CGColor]);
      CGContextFillRect(context, rect);
       [_mainRenderer drawBg:context];
       if(_volRenderer != nil) {
@@ -303,12 +339,12 @@
       }
 }
 -(void)drawGrid:(CGContextRef)context {
-    [_mainRenderer drawGrid:context gridRows:ChartStyle_gridRows gridColums:ChartStyle_gridColumns];
+    [_mainRenderer drawGrid:context gridRows:_gridRows gridColums:_gridColumns];
    if(_volRenderer != nil) {
-       [_volRenderer drawGrid:context gridRows:ChartStyle_gridRows gridColums:ChartStyle_gridColumns];
+       [_volRenderer drawGrid:context gridRows:_gridRows gridColums:_gridColumns];
    }
    if(_seconderyRender != nil) {
-       [_seconderyRender drawGrid:context gridRows:ChartStyle_gridRows gridColums:ChartStyle_gridColumns];
+       [_seconderyRender drawGrid:context gridRows:_gridRows gridColums:_gridColumns];
    }
      CGContextSetLineWidth(context, 1);
     CGContextAddRect(context, self.bounds);
@@ -334,17 +370,17 @@
     }
 }
 -(void)drawRightText:(CGContextRef)context {
-    [_mainRenderer drawRightText:context gridRows:ChartStyle_gridRows gridColums:ChartStyle_gridColumns];
+    [_mainRenderer drawRightText:context gridRows:_gridRows gridColums:_gridColumns];
     if(_volRenderer != nil) {
-        [_volRenderer drawRightText:context gridRows:ChartStyle_gridRows gridColums:ChartStyle_gridColumns];
+        [_volRenderer drawRightText:context gridRows:_gridRows gridColums:_gridColumns];
     }
     if(_seconderyRender != nil) {
-        [_seconderyRender drawRightText:context gridRows:ChartStyle_gridRows gridColums:ChartStyle_gridColumns];
+        [_seconderyRender drawRightText:context gridRows:_gridRows gridColums:_gridColumns];
     }
 }
 -(void)drawDate:(CGContextRef)context {
-    CGFloat cloumSpace = self.frame.size.width / (CGFloat)ChartStyle_gridColumns;
-    for (int i = 0; i < ChartStyle_gridColumns; i++) {
+    CGFloat cloumSpace = self.frame.size.width / (CGFloat)_gridColumns;
+    for (int i = 0; i < _gridColumns; i++) {
         NSUInteger index = [self calculateIndexWithSelectX: cloumSpace * (CGFloat)i];
         if([self outRangeIndex:index]) { continue; }
         KLineModel *data = self.datas[index];
@@ -557,9 +593,8 @@
 -(NSString *)calculateDateText:(NSTimeInterval)time {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-    formater.dateFormat = self.fromat;
+    formater.dateFormat = _fromat;
     return [formater stringFromDate:date];
 }
-
 
 @end
