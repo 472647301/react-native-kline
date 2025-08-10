@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-kline": ["./src/index"]
+      "rn-kline": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

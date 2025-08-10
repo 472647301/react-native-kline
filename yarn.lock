@@ -10599,40 +10599,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-kline@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "react-native-kline@workspace:."
-  dependencies:
-    "@commitlint/config-conventional": ^19.6.0
-    "@eslint/compat": ^1.2.7
-    "@eslint/eslintrc": ^3.3.0
-    "@eslint/js": ^9.22.0
-    "@evilmartians/lefthook": ^1.5.0
-    "@react-native-community/cli": 15.0.0-alpha.2
-    "@react-native/babel-preset": 0.79.2
-    "@react-native/eslint-config": ^0.78.0
-    "@release-it/conventional-changelog": ^9.0.2
-    "@types/jest": ^29.5.5
-    "@types/react": ^19.0.0
-    commitlint: ^19.6.1
-    del-cli: ^5.1.0
-    eslint: ^9.22.0
-    eslint-config-prettier: ^10.1.1
-    eslint-plugin-prettier: ^5.2.3
-    jest: ^29.7.0
-    prettier: ^3.0.3
-    react: 19.0.0
-    react-native: 0.79.2
-    react-native-builder-bob: ^0.40.13
-    release-it: ^17.10.0
-    turbo: ^1.10.7
-    typescript: ^5.8.3
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  languageName: unknown
-  linkType: soft
-
 "react-native-localize@npm:^3.5.1":
   version: 3.5.1
   resolution: "react-native-localize@npm:3.5.1"
@@ -11125,6 +11091,40 @@ __metadata:
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
   languageName: node
   linkType: hard
+
+"rn-kline@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "rn-kline@workspace:."
+  dependencies:
+    "@commitlint/config-conventional": ^19.6.0
+    "@eslint/compat": ^1.2.7
+    "@eslint/eslintrc": ^3.3.0
+    "@eslint/js": ^9.22.0
+    "@evilmartians/lefthook": ^1.5.0
+    "@react-native-community/cli": 15.0.0-alpha.2
+    "@react-native/babel-preset": 0.79.2
+    "@react-native/eslint-config": ^0.78.0
+    "@release-it/conventional-changelog": ^9.0.2
+    "@types/jest": ^29.5.5
+    "@types/react": ^19.0.0
+    commitlint: ^19.6.1
+    del-cli: ^5.1.0
+    eslint: ^9.22.0
+    eslint-config-prettier: ^10.1.1
+    eslint-plugin-prettier: ^5.2.3
+    jest: ^29.7.0
+    prettier: ^3.0.3
+    react: 19.0.0
+    react-native: 0.79.2
+    react-native-builder-bob: ^0.40.13
+    release-it: ^17.10.0
+    turbo: ^1.10.7
+    typescript: ^5.8.3
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  languageName: unknown
+  linkType: soft
 
 "run-applescript@npm:^7.0.0":
   version: 7.0.0

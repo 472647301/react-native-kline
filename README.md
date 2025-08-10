@@ -1,16 +1,16 @@
-# react-native-kline
+# rn-kline
 
-[![npm version](http://img.shields.io/npm/v/react-native-kline.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
-[![npm downloads](http://img.shields.io/npm/dm/react-native-kline.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
-[![npm licence](http://img.shields.io/npm/l/react-native-kline.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
-[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-kline "View this project on npm")
+[![npm version](http://img.shields.io/npm/v/rn-kline.svg?style=flat-square)](https://npmjs.org/package/rn-kline "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/rn-kline.svg?style=flat-square)](https://npmjs.org/package/rn-kline "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/rn-kline.svg?style=flat-square)](https://npmjs.org/package/rn-kline "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-989898.svg?style=flat-square)](https://npmjs.org/package/rn-kline "View this project on npm")
 
 
 ## Installation
 
 
 ```sh
-npm install react-native-kline
+npm install rn-kline
 ```
 
 
@@ -18,7 +18,7 @@ npm install react-native-kline
 
 
 ```js
-import { KLineChart } from "react-native-kline";
+import { KLineChart } from "rn-kline";
 
 // ...
 
@@ -33,9 +33,9 @@ import { KLineChart } from "react-native-kline";
   selectedInfoLabels={labels.map((str) => `${t(str)}   `)}
 />
 ```
-<figure style="display: flex;">
-  <img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG1.jpg?raw=true" style="margin-right: 10px;"><img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG2.jpg?raw=true">
-</figure>
+<div>
+  <img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG1.jpg?raw=true" width="300"><img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG2.jpg?raw=true" width="300">
+</div>
 
 ## Methods
 

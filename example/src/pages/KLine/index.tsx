@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { KLineChart, KLineState } from 'react-native-kline';
-import type { KLineChartRef, KLineChartProps } from 'react-native-kline';
+import { KLineChart, KLineState } from 'rn-kline';
+import type { KLineChartRef, KLineChartProps } from 'rn-kline';
 import { fetch_kline_list, type IPeriod } from '../../api';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KLinePeriod } from './components/KLinePeriod';

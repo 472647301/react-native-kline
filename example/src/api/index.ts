@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
-import type { KLineEntity } from 'react-native-kline';
+import type { KLineEntity } from 'rn-kline';
 
 export type IPeriod =
   | 'MIN_1'

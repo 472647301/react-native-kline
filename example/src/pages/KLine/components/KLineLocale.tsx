@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { KLineState } from 'react-native-kline';
+import { KLineState } from 'rn-kline';
 import { useTranslation } from 'react-i18next';
 import type { IPeriod } from '../../../api';
 
