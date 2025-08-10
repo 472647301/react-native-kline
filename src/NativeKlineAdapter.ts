@@ -33,14 +33,15 @@ export interface Spec extends TurboModule {
   /**
    * @name 向尾部添加数据
    * @param data K线数据
-   * @param resetShowPosition 重置K线显示位置`default true`,如不需重置K线传入`false`
+   * @param resetShowPosition 重置K线显示位置`default false`
    */
   addLast(data: KLineEntity, resetShowPosition?: boolean): void;
   /**
    * @name 向前面追加多个数据
    * @param list K线数据
+   * @param resetShowPosition 重置K线显示位置`default false`
    */
-  appendData(list: KLineEntity[]): void;
+  appendData(list: KLineEntity[], resetShowPosition?: boolean): void;
   /**
    * @name 改变某个点的值
    * @param position 索引值

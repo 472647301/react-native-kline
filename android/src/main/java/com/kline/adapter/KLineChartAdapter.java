@@ -135,10 +135,11 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     /**
      * 向前面追加多个数据
      */
-    public void appendData(List<T> data) {
+    public void appendData(List<T> data, boolean resetShowPosition) {
       dataSource.addAll(0, data);
       this.dataCount = dataSource.size();
       points = dataTools.calculate(dataSource);
+      setResetShowPosition(resetShowPosition);
       notifyDataSetChanged();
     }
 
