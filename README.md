@@ -34,7 +34,7 @@ import { KLineChart } from "react-native-kline";
 />
 ```
 <figure style="display: flex;">
-  <img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG1.jpg?raw=true" width="320"><img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG2.jpg?raw=true" width="320">
+  <img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG1.jpg?raw=true" style="margin-right: 10px;"><img src="https://github.com/472647301/react-native-kline/blob/master/example/screenshots/WechatIMG2.jpg?raw=true">
 </figure>
 
 ## Methods
