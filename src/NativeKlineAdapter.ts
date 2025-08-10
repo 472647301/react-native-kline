@@ -20,10 +20,11 @@ export interface KLineEntity {
 
 export interface Spec extends TurboModule {
   /**
-   * 重置K线数据
+   * @name 重置K线数据
    * @param list K线数据
    * @param resetShowPosition 重置K线显示位置`default true`,如不需重置K线传入`false`
    * @param resetLastAnim 清楚最后一要柱子的动画,如果切换币需要使用方法传`true`
+   * @summary 用于初次获取到k线数据调用
    */
   resetData(
     list: KLineEntity[],
@@ -31,21 +32,24 @@ export interface Spec extends TurboModule {
     resetLastAnim?: boolean
   ): void;
   /**
-   * @name 向尾部添加数据
+   * @name 添加新数据
    * @param data K线数据
    * @param resetShowPosition 重置K线显示位置`default false`
+   * @summary 用于`WebSocket`实时推送过来的数据，需要自己判断是走`addNewData`还是`changeItem`
    */
-  addLast(data: KLineEntity, resetShowPosition?: boolean): void;
+  addNewData(data: KLineEntity, resetShowPosition?: boolean): void;
   /**
-   * @name 向前面追加多个数据
+   * @name 加载更多数据
    * @param list K线数据
    * @param resetShowPosition 重置K线显示位置`default false`
+   * @summary 用于滑动到最左侧加载更多数据调用
    */
-  appendData(list: KLineEntity[], resetShowPosition?: boolean): void;
+  addHistoryData(list: KLineEntity[], resetShowPosition?: boolean): void;
   /**
    * @name 改变某个点的值
    * @param position 索引值
    * @param data K线数据
+   * @summary 用于`WebSocket`实时推送过来的数据，需要自己判断是走`addNewData`还是`changeItem`
    */
   changeItem(position: Int32, data: KLineEntity): void;
 }

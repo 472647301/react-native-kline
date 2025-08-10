@@ -1,4 +1,5 @@
 import axios from 'axios';
+import dayjs from 'dayjs';
 import type { KLineEntity } from 'react-native-kline';
 
 export type IPeriod =
@@ -39,6 +40,12 @@ export async function fetch_kline_list(
   const n = diff[type] ?? 1;
   const now = parseInt((Date.now() / 1000).toFixed());
   const from = (last ?? now) - 1 * n * 60 * size;
+  console.log(
+    'last',
+    last,
+    dayjs(last ? last * 1000 : now * 1000).format('YYYY-MM-DD HH:mm'),
+    dayjs(from * 1000).format('YYYY-MM-DD HH:mm')
+  );
   const data = {
     from,
     to: last ?? now,

@@ -38,10 +38,25 @@ using namespace facebook::react;
   _klineHeight = _view.bounds.size.height;
   if(_klineCharView == nil) {
     _klineCharView = [[KLineChartView alloc] initWithFrame:_view.bounds];
+    _klineCharView.delegate = self;
   }
   [KLineStateManager manager].klineChart = self.klineCharView;
   [_view addSubview:self.klineCharView];
   return self;
+}
+
+- (void)onSlidLeft
+{
+  if(_eventEmitter == nil) return;
+  const auto &defaultEvent = *std::static_pointer_cast<KlineViewEventEmitter const>(_eventEmitter);
+  defaultEvent.onSlidLeft({});
+}
+
+- (void)onSlidRight
+{
+  if(_eventEmitter == nil) return;
+  const auto &defaultEvent = *std::static_pointer_cast<KlineViewEventEmitter const>(_eventEmitter);
+  defaultEvent.onSlidRight({});
 }
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
@@ -52,6 +67,17 @@ using namespace facebook::react;
     _klineWidth = _view.bounds.size.width;
     _klineHeight = _view.bounds.size.height;
     _klineCharView.frame = _view.bounds;
+  }
+  if (oldViewProps.kLineState != newViewProps.kLineState) {
+    switch (newViewProps.kLineState) {
+      case 4103:
+        // 分时图
+        [KLineStateManager manager].isLine = NO;
+        break;
+      default:
+        [KLineStateManager manager].isLine = YES;
+        break;
+    }
   }
 //    if (oldViewProps.color != newViewProps.color) {
 //        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.color.c_str()];

@@ -113,16 +113,16 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     }
 
     /**
-     * 向尾部添加数据
+     * 添加新数据
      */
-    public void addLast(T entity) {
-        addLast(entity, false);
+    public void addNewData(T entity) {
+      addNewData(entity, false);
     }
 
     /**
-     * 向尾部添加数据
+     * 添加新数据
      */
-    public void addLast(T entity, boolean resetShowPosition) {
+    public void addNewData(T entity, boolean resetShowPosition) {
         if (null != entity) {
             dataSource.add(entity);
             this.dataCount++;
@@ -133,9 +133,9 @@ public class KLineChartAdapter<T extends KLineEntity> extends BaseKLineChartAdap
     }
 
     /**
-     * 向前面追加多个数据
+     * 加载更多数据
      */
-    public void appendData(List<T> data, boolean resetShowPosition) {
+    public void addHistoryData(List<T> data, boolean resetShowPosition) {
       dataSource.addAll(0, data);
       this.dataCount = dataSource.size();
       points = dataTools.calculate(dataSource);

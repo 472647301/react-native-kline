@@ -46,16 +46,16 @@ class KlineAdapterModule(reactContext: ReactApplicationContext) :
     }
   }
 
-  override fun addLast(data: ReadableMap?, resetShowPosition: Boolean?) {
+  override fun addNewData(data: ReadableMap?, resetShowPosition: Boolean?) {
     if (data == null) return
     if (resetShowPosition != null) {
-      KlineViewManager.adapter.addLast(fetchEntity(data), resetShowPosition)
+      KlineViewManager.adapter.addNewData(fetchEntity(data), resetShowPosition)
     } else {
-      KlineViewManager.adapter.addLast(fetchEntity(data))
+      KlineViewManager.adapter.addNewData(fetchEntity(data))
     }
   }
 
-  override fun appendData(list: ReadableArray?, resetShowPosition: Boolean?) {
+  override fun addHistoryData(list: ReadableArray?, resetShowPosition: Boolean?) {
     if (list == null) return
     val bars = ArrayList<KLineEntity>()
     for (i in 0 until list.size()) {
@@ -63,7 +63,7 @@ class KlineAdapterModule(reactContext: ReactApplicationContext) :
       val entity = fetchEntity(item)
       bars.add(entity)
     }
-    KlineViewManager.adapter.appendData(bars, resetShowPosition ?: false)
+    KlineViewManager.adapter.addHistoryData(bars, resetShowPosition ?: false)
   }
 
   override fun changeItem(position: Double, data: ReadableMap?) {

@@ -8,7 +8,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KlineView : RCTViewComponentView
+@interface KlineView : RCTViewComponentView <KLineDelegate>
 
 @property(nonatomic,strong) KLineChartView *klineCharView;
 

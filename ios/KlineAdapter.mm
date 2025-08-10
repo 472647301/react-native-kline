@@ -6,24 +6,51 @@
 @implementation KlineAdapter
 RCT_EXPORT_MODULE()
 
-- (dispatch_queue_t)methodQueue {
+- (dispatch_queue_t)methodQueue
+{
   return dispatch_get_main_queue();
 }
 
-
-- (void)addLast:(JS::NativeKlineAdapter::KLineEntity &)data resetShowPosition:(nonnull NSNumber *)resetShowPosition { 
-  
+- (void)addNewData:(JS::NativeKlineAdapter::KLineEntity &)data resetShowPosition:(nonnull NSNumber *)resetShowPosition
+{
+  NSMutableArray *datas = [[KLineStateManager manager].datas mutableCopy];
+  KLineModel   *bar = [[KLineModel alloc] init];
+  bar.open = data.open();
+  bar.high = data.high();
+  bar.low = data.low();
+  bar.close = data.close();
+  bar.vol = data.vol();
+  bar.id = data.id_();
+  [datas insertObject:bar atIndex:0];
+  [DataUtil calculate:datas];
+  [[KLineStateManager manager] setDatas:datas];
 }
 
-- (void)changeItem:(NSInteger)position data:(JS::NativeKlineAdapter::KLineEntity &)data { 
-  
+- (void)changeItem:(NSInteger)position data:(JS::NativeKlineAdapter::KLineEntity &)data
+{
+  NSMutableArray *datas = [[KLineStateManager manager].datas mutableCopy];
+  KLineModel   *bar = [[KLineModel alloc] init];
+  bar.open = data.open();
+  bar.high = data.high();
+  bar.low = data.low();
+  bar.close = data.close();
+  bar.vol = data.vol();
+  bar.id = data.id_();
+  // ios 需要倒过来
+  NSArray *tempReversedArray = [[datas reverseObjectEnumerator] allObjects];
+  [datas setArray:tempReversedArray];
+  [datas replaceObjectAtIndex:position withObject: bar];
+  NSArray *dataReversedArray = [[datas reverseObjectEnumerator] allObjects];
+  [datas setArray:dataReversedArray];
+  [DataUtil calculate:datas];
+  [[KLineStateManager manager] setDatas:datas];
 }
 
-- (void)resetData:(nonnull NSArray *)list resetShowPosition:(nonnull NSNumber *)resetShowPosition resetLastAnim:(nonnull NSNumber *)resetLastAnim { 
-  NSArray *newList = [[list reverseObjectEnumerator] allObjects];
-  NSMutableArray *datas = [NSMutableArray arrayWithCapacity:newList.count];
-  for (int i = 0; i < newList.count; i++) {
-    NSDictionary *item = newList[i];
+- (void)resetData:(nonnull NSArray *)list resetShowPosition:(nonnull NSNumber *)resetShowPosition resetLastAnim:(nonnull NSNumber *)resetLastAnim
+{
+  NSMutableArray *datas = [[NSMutableArray alloc] init];
+  for (int i = 0; i < list.count; i++) {
+    NSDictionary *item = list[i];
     KLineModel   *bar = [[KLineModel alloc] init];
     bar.open = [item[@"open"] floatValue];
     bar.high = [item[@"high"] floatValue];
@@ -33,27 +60,34 @@ RCT_EXPORT_MODULE()
     bar.id = [item[@"id"] doubleValue];
     [datas addObject:bar];
   }
+  // iOS 需要倒序
+  NSArray *tempReversedArray = [[datas reverseObjectEnumerator] allObjects];
+  [datas setArray:tempReversedArray];
   [DataUtil calculate:datas];
-  [KLineStateManager manager].datas = datas;
+  [[KLineStateManager manager] setDatas:datas];
 }
 
-- (void)appendData:(NSArray *)list {
-  NSArray  *models = [KLineStateManager manager].datas;
-  NSMutableArray *newDatas = [NSMutableArray arrayWithArray:models];
-  NSArray *newList = [[list reverseObjectEnumerator] allObjects];
-  for (int i = 0; i < newList.count; i++) {
-      NSDictionary *item = newList[i];
-      KLineModel   *bar = [[KLineModel alloc] init];
-      bar.open = [item[@"open"] floatValue];
-      bar.high = [item[@"high"] floatValue];
-      bar.low = [item[@"low"] floatValue];
-      bar.close = [item[@"close"] floatValue];
-      bar.vol = [item[@"vol"] floatValue];
-      bar.id = [item[@"id"] doubleValue];
-      [newDatas addObject:bar];
+- (void)addHistoryData:(NSArray *)list resetShowPosition:(nonnull NSNumber *)resetShowPosition
+{
+  NSMutableArray *datas = [[NSMutableArray alloc] init];
+  for (int i = 0; i < list.count; i++) {
+    NSDictionary *item = list[i];
+    KLineModel   *bar = [[KLineModel alloc] init];
+    bar.open = [item[@"open"] floatValue];
+    bar.high = [item[@"high"] floatValue];
+    bar.low = [item[@"low"] floatValue];
+    bar.close = [item[@"close"] floatValue];
+    bar.vol = [item[@"vol"] floatValue];
+    bar.id = [item[@"id"] doubleValue];
+    [datas addObject:bar];
   }
-  [DataUtil calculate:newDatas];
-  [KLineStateManager manager].datas = [newDatas copy];
+  // ios 需要倒过来
+  NSArray *tempReversedArray = [[datas reverseObjectEnumerator] allObjects];
+  [datas setArray:tempReversedArray];
+  NSMutableArray *oldDatas = [[KLineStateManager manager].datas mutableCopy];
+  [oldDatas addObjectsFromArray:datas];
+  [DataUtil calculate:oldDatas];
+  [[KLineStateManager manager] setDatas:oldDatas];
 }
 
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:

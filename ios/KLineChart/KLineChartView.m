@@ -232,6 +232,16 @@
     if(self.scrollX == self.minScroll) {
         [_displayLink invalidate];
         _displayLink = nil;
+        SEL selector = NSSelectorFromString(@"onSlidRight");
+        if ([self.delegate respondsToSelector:selector]) {
+            [self.delegate onSlidRight];
+        }
+    }
+    if (self.scrollX == self.maxScroll) {
+        SEL selector = NSSelectorFromString(@"onSlidLeft");
+        if ([self.delegate respondsToSelector:selector]) {
+            [self.delegate onSlidLeft];
+        }
     }
 }
 

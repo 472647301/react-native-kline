@@ -14,28 +14,31 @@ export interface KLineChartRef extends Spec {
 
 export const KLineChart = forwardRef<KLineChartRef, KLineChartProps>(
   (props, ref) => {
-    const datas = useRef<KLineEntity[]>([]);
+    const listRef = useRef<KLineEntity[]>([]);
 
     useImperativeHandle(ref, () => ({
       resetData(list, resetShowPosition, resetLastAnim) {
-        datas.current = list;
+        listRef.current = list;
         KlineAdapter.resetData(list, resetShowPosition, resetLastAnim);
       },
       changeItem(position, data) {
-        datas.current[position] = data;
+        if (position < 0 || position >= listRef.current.length) return;
+        listRef.current[position] = data;
         KlineAdapter.changeItem(position, data);
       },
       getConstants: KlineAdapter.getConstants,
-      addLast(data, resetShowPosition) {
-        datas.current.push(data);
-        KlineAdapter.addLast(data, resetShowPosition);
+      addNewData(data, resetShowPosition) {
+        if (!listRef.current.length) return;
+        listRef.current.push(data);
+        KlineAdapter.addNewData(data, resetShowPosition);
       },
-      appendData(list) {
-        datas.current = list.concat(datas.current);
-        KlineAdapter.appendData(list);
+      addHistoryData(list, resetShowPosition) {
+        if (!listRef.current.length) return;
+        listRef.current = list.concat(listRef.current);
+        KlineAdapter.addHistoryData(list, resetShowPosition);
       },
       getData() {
-        return datas.current;
+        return listRef.current;
       },
     }));
 

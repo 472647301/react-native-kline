@@ -12,7 +12,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol KLineDelegate <NSObject>
+
+@required
+- (void) onSlidLeft;
+- (void) onSlidRight;
+
+@end
+
 @interface KLineChartView : UIView
+
+@property (nonatomic, weak) id<KLineDelegate> delegate;
 
 @property(nonatomic,strong) NSArray<KLineModel *> *datas;
 
