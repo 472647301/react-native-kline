@@ -1,7 +1,7 @@
 {
   "name": "react-native-kline",
-  "version": "0.1.0",
-  "description": "react-native-kline",
+  "version": "3.0.0",
+  "description": "React Native Kline RN KLine Depth Map",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {

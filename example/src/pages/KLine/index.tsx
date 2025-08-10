@@ -119,7 +119,7 @@ export function KLinePage() {
           onSlidLeft={onSlidLeft}
           onSlidRight={onSlidRight}
           dateTimeFormatter={dateTimeFormatter[period]}
-          selectedInfoLabels={labels.map((str) => t(str))}
+          selectedInfoLabels={labels.map((str) => `${t(str)}   `)}
         />
         {loading ? (
           <View style={styles.loading}>
