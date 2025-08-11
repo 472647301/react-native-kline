@@ -125,6 +125,8 @@ export function KLinePage() {
           // timeLineFillBottomColor='#1677ff'
           // timeLineFillTopColor='#eb2f96'
           // timeLineColor='#722ed1'
+          // increaseColor='#eb2f96'
+          // decreaseColor='#722ed1'
           // gridColumns={4}
           // gridRows={3}
         />

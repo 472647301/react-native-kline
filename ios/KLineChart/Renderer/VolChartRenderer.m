@@ -25,12 +25,19 @@
     CGContextDrawPath(context, kCGPathStroke);
     
 }
-- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+- (void)drawChart:(CGContextRef)context
+         lastPoit:(KLineModel *)lastPoint
+         curPoint:(KLineModel *)curPoint
+             curX:(CGFloat)curX
+    timeLineColor:(UIColor *)timeLineColor
 timeLineFillTopColor:(UIColor *) timeLineFillTopColor
 timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
 timeLineEndPointColor:(UIColor *) timeLineEndPointColor
-timeLineEndRadius:(CGFloat) timeLineEndRadius {
-    [self drawVolChat:context curPoint:curPoint curX:curX];
+timeLineEndRadius:(CGFloat) timeLineEndRadius
+    increaseColor:(UIColor *) increaseColor
+    decreaseColor:(UIColor *) decreaseColor
+{
+    [self drawVolChat:context curPoint:curPoint curX:curX increaseColor:increaseColor decreaseColor:decreaseColor];
     if(lastPoint != nil){
         if(curPoint.MA5Volume != 0) {
             [self drawLine:context lastValue:lastPoint.MA5Volume curValue:curPoint.MA5Volume curX:curX color:ChartColors_ma5Color];
@@ -41,13 +48,18 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius {
     }
 }
 
-- (void)drawVolChat:(CGContextRef)context curPoint:(KLineModel *)curPoint curX:(CGFloat)curX {
+- (void)drawVolChat:(CGContextRef)context
+           curPoint:(KLineModel *)curPoint
+               curX:(CGFloat)curX
+      increaseColor:(UIColor *) increaseColor
+      decreaseColor:(UIColor *) decreaseColor
+{
     CGFloat top = [self getY:curPoint.vol];
     CGContextSetLineWidth(context, self.candleWidth);
     if(curPoint.close > curPoint.open) {
-        CGContextSetStrokeColorWithColor(context, ChartColors_upColor.CGColor);
+        CGContextSetStrokeColorWithColor(context, increaseColor.CGColor);
     } else {
-        CGContextSetStrokeColorWithColor(context, ChartColors_dnColor.CGColor);
+        CGContextSetStrokeColorWithColor(context, decreaseColor.CGColor);
     }
     CGContextMoveToPoint(context, curX, CGRectGetMaxY(self.chartRect));
     CGContextAddLineToPoint(context, curX, top);

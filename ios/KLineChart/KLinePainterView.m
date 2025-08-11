@@ -171,6 +171,8 @@
         self.timeLineFillBottomColor = [UIColor rgb_r:0x00 g:0x00 b:0x00 alpha:0];
         self.timeLineEndPointColor = [UIColor colorWithCGColor:ChartColors_realTimeLineColor.CGColor];
         self.timeLineEndRadius = 2.0;
+        self.increaseColor = [UIColor colorWithCGColor:ChartColors_upColor.CGColor];
+        self.decreaseColor = [UIColor colorWithCGColor:ChartColors_dnColor.CGColor];
     }
     return self;
 }
@@ -375,12 +377,12 @@
         if(index != _startIndex) {
             lastPoint = self.datas[index - 1];
         }
-        [_mainRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius];
+        [_mainRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius increaseColor:_increaseColor decreaseColor:_decreaseColor];
         if(_volRenderer != nil) {
-            [_volRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius];
+            [_volRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius increaseColor:_increaseColor decreaseColor:_decreaseColor];
         }
         if(_seconderyRender != nil) {
-            [_seconderyRender drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius];
+            [_seconderyRender drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius increaseColor:_increaseColor decreaseColor:_decreaseColor];
         }
     }
 }

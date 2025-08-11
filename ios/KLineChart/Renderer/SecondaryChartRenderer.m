@@ -46,13 +46,20 @@
 }
 
 
-- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+- (void)drawChart:(CGContextRef)context
+         lastPoit:(KLineModel *)lastPoint
+         curPoint:(KLineModel *)curPoint
+             curX:(CGFloat)curX
+    timeLineColor:(UIColor *)timeLineColor
 timeLineFillTopColor:(UIColor *) timeLineFillTopColor
 timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
 timeLineEndPointColor:(UIColor *) timeLineEndPointColor
-timeLineEndRadius:(CGFloat) timeLineEndRadius {
+timeLineEndRadius:(CGFloat) timeLineEndRadius
+    increaseColor:(UIColor *) increaseColor
+    decreaseColor:(UIColor *) decreaseColor
+{
     if(_state == SecondaryStateMacd) {
-        [self drawMACD:context lastPoit:lastPoint curPoint:curPoint curX:curX];
+        [self drawMACD:context lastPoit:lastPoint curPoint:curPoint curX:curX increaseColor:increaseColor decreaseColor:decreaseColor];
     } else if (_state == SecondaryStateKDJ) {
         if(lastPoint != nil) {
             if(curPoint.k != 0) {
@@ -80,13 +87,19 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius {
     }
 }
 
-- (void)drawMACD:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX {
+- (void)drawMACD:(CGContextRef)context
+        lastPoit:(KLineModel *)lastPoint
+        curPoint:(KLineModel *)curPoint
+            curX:(CGFloat)curX
+   increaseColor:(UIColor *) increaseColor
+   decreaseColor:(UIColor *) decreaseColor
+{
     CGFloat maxdY = [self getY:curPoint.macd];
     CGFloat zeroy = [self getY:0];
     if(curPoint.macd > 0) {
-         CGContextSetStrokeColorWithColor(context, ChartColors_upColor.CGColor);
+         CGContextSetStrokeColorWithColor(context, increaseColor.CGColor);
     } else {
-        CGContextSetStrokeColorWithColor(context, ChartColors_dnColor.CGColor);
+        CGContextSetStrokeColorWithColor(context, decreaseColor.CGColor);
     }
     CGContextSetLineWidth(context, self.mMACDWidth);
     CGContextMoveToPoint(context, curX, maxdY);

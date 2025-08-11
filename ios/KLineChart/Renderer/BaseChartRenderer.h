@@ -47,7 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 timeLineFillTopColor:(UIColor *) timeLineFillTopColor
 timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
 timeLineEndPointColor:(UIColor *) timeLineEndPointColor
-timeLineEndRadius:(CGFloat) timeLineEndRadius;
+timeLineEndRadius:(CGFloat) timeLineEndRadius
+   increaseColor:(UIColor *) increaseColor
+   decreaseColor:(UIColor *) decreaseColor;
 
 -(void)drawLine:(CGContextRef)context
       lastValue:(CGFloat)lastValue

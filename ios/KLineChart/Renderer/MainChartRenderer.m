@@ -61,13 +61,20 @@
     CGContextDrawPath(context, kCGPathStroke);
 }
 
-- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+- (void)drawChart:(CGContextRef)context
+         lastPoit:(KLineModel *)lastPoint
+         curPoint:(KLineModel *)curPoint
+             curX:(CGFloat)curX
+    timeLineColor:(UIColor *)timeLineColor
 timeLineFillTopColor:(UIColor *) timeLineFillTopColor
 timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
 timeLineEndPointColor:(UIColor *) timeLineEndPointColor
-timeLineEndRadius:(CGFloat) timeLineEndRadius {
+timeLineEndRadius:(CGFloat) timeLineEndRadius
+    increaseColor:(UIColor *) increaseColor
+    decreaseColor:(UIColor *) decreaseColor
+{
     if(!_isLine) {
-        [self drawCandle:context curPoint:curPoint curX:curX];
+        [self drawCandle:context curPoint:curPoint curX:curX increaseColor:increaseColor decreaseColor:decreaseColor];
     }
     if (lastPoint != nil) {
         if(_isLine) {
@@ -80,11 +87,16 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius {
     }
 }
 
-- (void)drawKLine:(CGContextRef)context lastValue:(CGFloat)lastValue curValue:(CGFloat)curValue curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+- (void)drawKLine:(CGContextRef)context
+        lastValue:(CGFloat)lastValue
+         curValue:(CGFloat)curValue
+             curX:(CGFloat)curX
+    timeLineColor:(UIColor *)timeLineColor
 timeLineFillTopColor:(UIColor *) timeLineFillTopColor
 timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
 timeLineEndPointColor:(UIColor *) timeLineEndPointColor
-timeLineEndRadius:(CGFloat) timeLineEndRadius  {
+timeLineEndRadius:(CGFloat) timeLineEndRadius
+{
     CGFloat x1 = curX;
     CGFloat y1 = [self getY:curValue];
     CGFloat x2 = curX + self.candleWidth + ChartStyle_canldeMargin;
@@ -146,15 +158,20 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius  {
 }
 
 
-- (void)drawCandle:(CGContextRef)context curPoint:(KLineModel *)curPoint curX:(CGFloat)curX {
+- (void)drawCandle:(CGContextRef)context
+          curPoint:(KLineModel *)curPoint
+              curX:(CGFloat)curX
+     increaseColor:(UIColor *) increaseColor
+     decreaseColor:(UIColor *) decreaseColor
+{
     CGFloat high = [self getY:curPoint.high];
     CGFloat low = [self getY:curPoint.low];
     CGFloat open = [self getY:curPoint.open];
     CGFloat close = [self getY:curPoint.close];
-    UIColor *color = ChartColors_dnColor;
+    UIColor *color = decreaseColor;
     
     if(open > close) {
-        color = ChartColors_upColor;
+        color = increaseColor;
     }
     
     CGContextSetStrokeColorWithColor(context, color.CGColor);
