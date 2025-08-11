@@ -122,11 +122,11 @@ export function KLinePage() {
           selectedInfoLabels={labels.map((str) => `${t(str)}   `)}
           // backgroundFillBottomColor="#1677ff"
           // backgroundFillTopColor="#eb2f96"
-          timeLineFillBottomColor='#1677ff'
-          timeLineFillTopColor='#eb2f96'
-          timeLineColor='#722ed1'
-          gridColumns={4}
-          gridRows={3}
+          // timeLineFillBottomColor='#1677ff'
+          // timeLineFillTopColor='#eb2f96'
+          // timeLineColor='#722ed1'
+          // gridColumns={4}
+          // gridRows={3}
         />
         {loading ? (
           <View style={styles.loading}>
