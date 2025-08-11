@@ -37,12 +37,17 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)drawTopText:(CGContextRef)context
           curPoint:(KLineModel *)curPoint;
 
--(void)drawBg:(CGContextRef)context;
+-(void)drawBg:(CGContextRef)context backgroundFillTopColor:(UIColor *)backgroundFillTopColor backgroundFillBottomColor:(UIColor *) backgroundFillBottomColor;
 
 -(void)drawChart:(CGContextRef)context
         lastPoit:(KLineModel *)lastPoint
         curPoint:(KLineModel *)curPoint
-            curX:(CGFloat)curX;
+            curX:(CGFloat)curX
+   timeLineColor:(UIColor *)timeLineColor
+timeLineFillTopColor:(UIColor *) timeLineFillTopColor
+timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
+timeLineEndPointColor:(UIColor *) timeLineEndPointColor
+timeLineEndRadius:(CGFloat) timeLineEndRadius;
 
 -(void)drawLine:(CGContextRef)context
       lastValue:(CGFloat)lastValue

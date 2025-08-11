@@ -23,7 +23,7 @@ export default function App() {
     );
     await i18n.init({
       debug: __DEV__,
-      lng: isZh ? 'zh_CN' : 'rn_US',
+      lng: isZh ? 'zh_CN' : 'en_US',
       resources: {
         zh_CN: { translation: zhCN },
         en_US: { translation: enUS },

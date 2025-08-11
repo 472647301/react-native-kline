@@ -61,13 +61,17 @@
     CGContextDrawPath(context, kCGPathStroke);
 }
 
-- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX {
+- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+timeLineFillTopColor:(UIColor *) timeLineFillTopColor
+timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
+timeLineEndPointColor:(UIColor *) timeLineEndPointColor
+timeLineEndRadius:(CGFloat) timeLineEndRadius {
     if(!_isLine) {
         [self drawCandle:context curPoint:curPoint curX:curX];
     }
     if (lastPoint != nil) {
         if(_isLine) {
-            [self drawKLine:context lastValue:lastPoint.close curValue:curPoint.close curX:curX];
+            [self drawKLine:context lastValue:lastPoint.close curValue:curPoint.close curX:curX timeLineColor:timeLineColor timeLineFillTopColor:timeLineFillTopColor timeLineFillBottomColor:timeLineFillBottomColor timeLineEndPointColor:timeLineEndPointColor timeLineEndRadius:timeLineEndRadius];
         } else if (_state == MainStateMA) {
             [self drawMaLine:context lastPoit:lastPoint curPoint:curPoint curX:curX];
         } else if (_state == MainStateBOLL) {
@@ -76,13 +80,17 @@
     }
 }
 
-- (void)drawKLine:(CGContextRef)context lastValue:(CGFloat)lastValue curValue:(CGFloat)curValue curX:(CGFloat)curX  {
+- (void)drawKLine:(CGContextRef)context lastValue:(CGFloat)lastValue curValue:(CGFloat)curValue curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+timeLineFillTopColor:(UIColor *) timeLineFillTopColor
+timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
+timeLineEndPointColor:(UIColor *) timeLineEndPointColor
+timeLineEndRadius:(CGFloat) timeLineEndRadius  {
     CGFloat x1 = curX;
     CGFloat y1 = [self getY:curValue];
     CGFloat x2 = curX + self.candleWidth + ChartStyle_canldeMargin;
     CGFloat y2 = [self getY:lastValue];
     CGContextSetLineWidth(context, 1);
-    CGContextSetStrokeColorWithColor(context, ChartColors_kLineColor.CGColor);
+    CGContextSetStrokeColorWithColor(context, [timeLineColor CGColor]);
     CGContextMoveToPoint(context, x1, y1);
     CGContextAddCurveToPoint(context, (x1 + x2) / 2.0, y1,  (x1 + x2) / 2.0, y2, x2, y2);
     CGContextDrawPath(context, kCGPathFillStroke);
@@ -98,7 +106,7 @@
     CGContextClip(context);
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0,1};
-    NSArray *colors = @[(__bridge id)[UIColor rgb_r:0x4c g:0x86 b:0xCD alpha:1].CGColor, (__bridge id)[UIColor rgb_r:0x00 g:0x00 b:0x00 alpha:0].CGColor];
+    NSArray *colors = @[(__bridge id)[timeLineFillTopColor CGColor], (__bridge id)[timeLineFillBottomColor CGColor]];
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef) colors, locations);
     CGColorSpaceRelease(colorSpace);
     CGPoint start = CGPointMake((x1 + x2) / 2, CGRectGetMinY(self.chartRect));

@@ -56,6 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign) CGFloat timeLineEndRadius;
 
+@property(nonatomic,strong) UIColor* increaseColor;
+
+@property(nonatomic,strong) UIColor* decreaseColor;
+
 @property(nonatomic,copy) void(^showInfoBlock)(KLineModel *model, BOOL isLeft);
 
 - (instancetype)initWithFrame:(CGRect)frame

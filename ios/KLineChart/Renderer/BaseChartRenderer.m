@@ -47,16 +47,18 @@
           curPoint:(KLineModel *)curPoint {
     
 }
--(void)drawBg:(CGContextRef)context {
+-(void)drawBg:(CGContextRef)context backgroundFillTopColor:(UIColor *)backgroundFillTopColor backgroundFillBottomColor:(UIColor *) backgroundFillBottomColor {
     CGContextClipToRect(context, _chartRect);
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0,1};
-    NSArray *colors = @[(__bridge id)[UIColor rgb_r:0x0E g:0x19 b:0x25 alpha:1].CGColor, (__bridge id)[UIColor rgb_r:0x0E g:0x20 b:0x34 alpha:1].CGColor];
+    NSArray *colors = @[(__bridge id)[backgroundFillTopColor CGColor], (__bridge id)[backgroundFillBottomColor CGColor]];
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef) colors, locations);
     CGColorSpaceRelease(colorSpace);
-    CGPoint start = CGPointMake(_chartRect.size.width / 2, CGRectGetMinY(_chartRect));
-    CGPoint end = CGPointMake(_chartRect.size.width / 2, CGRectGetMaxY(_chartRect));
-    CGContextDrawLinearGradient(context, gradient, start, end, 0);
+    CGPoint startPoint = CGPointMake(_chartRect.size.width, CGRectGetMinY(_chartRect));
+    CGPoint endPoint = CGPointMake(_chartRect.size.width, CGRectGetMaxY(_chartRect));
+//    CGPoint start = CGPointMake(_chartRect.size.width / 2, CGRectGetMinY(_chartRect));
+//    CGPoint end = CGPointMake(_chartRect.size.width / 2, CGRectGetMaxY(_chartRect));
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
     CGContextResetClip(context);
     
     CGColorSpaceRelease(colorSpace);

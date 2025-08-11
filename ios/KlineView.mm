@@ -138,10 +138,12 @@ using namespace facebook::react;
   // Slide left K line inside indent width ⚠️暂时忽略 overScrollRange
   // Y值精度格式化 `%.03f` ⚠️暂时忽略 valueFormatter
   // 成交量格式化 `%.03f` ⚠️暂时忽略 volFormatter
-  // 时间格式化 `yyyy-MM-dd hh:mm`
+  // 时间格式化 `yyyy-MM-dd HH:mm`
   if (oldViewProps.dateTimeFormatter != newViewProps.dateTimeFormatter) {
-    NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.dateTimeFormatter.c_str()];
-    _klineCharView.fromat = fromat;
+    if (newViewProps.dateTimeFormatter.empty() != NO) {
+      NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.dateTimeFormatter.c_str()];
+      _klineCharView.fromat = fromat;
+    }
   }
   // 主视图Formatte `%.03f` ⚠️暂时忽略 mainValueFormatter
   // 设置选中X轴坐标背景色 ⚠️暂时忽略 selectedXLabelBackgroundColor
@@ -189,12 +191,71 @@ using namespace facebook::react;
   // 设置十字线跟随手势移动/显示收盘价 ⚠️暂时忽略 crossFollowTouch
   // 设置y轴上Label与视图右边距 ⚠️暂时忽略 yLabelMarginBorder
   // 设置背景色顶部颜色
-    if (oldViewProps.backgroundFillTopColor != newViewProps.backgroundFillTopColor) {
-        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.backgroundFillTopColor.c_str()];
-        _klineCharView.backgroundFillTopColor = [self hexStringToColor:colorToConvert];
+  if (oldViewProps.backgroundFillTopColor != newViewProps.backgroundFillTopColor) {
+    if (newViewProps.backgroundFillTopColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.backgroundFillTopColor.c_str()];
+      _klineCharView.backgroundFillTopColor = [self hexStringToColor:colorToConvert];
     }
-
-    [super updateProps:props oldProps:oldProps];
+  }
+  // 设置背景色底部颜色
+  if (oldViewProps.backgroundFillBottomColor != newViewProps.backgroundFillBottomColor) {
+    if (newViewProps.backgroundFillBottomColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.backgroundFillBottomColor.c_str()];
+      _klineCharView.backgroundFillBottomColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  // 设置分时线颜色
+  if (oldViewProps.timeLineColor != newViewProps.timeLineColor) {
+    if (newViewProps.timeLineColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.timeLineColor.c_str()];
+      _klineCharView.timeLineColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  // 设置分时线填充渐变的顶部颜色
+  if (oldViewProps.timeLineFillTopColor != newViewProps.timeLineFillTopColor) {
+    if (newViewProps.timeLineFillTopColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.timeLineFillTopColor.c_str()];
+      _klineCharView.timeLineFillTopColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  // 设置分时线填充渐变的底部颜色
+  if (oldViewProps.timeLineFillBottomColor != newViewProps.timeLineFillBottomColor) {
+    if (newViewProps.timeLineFillBottomColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.timeLineFillBottomColor.c_str()];
+      _klineCharView.timeLineFillBottomColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  // 分时线呼吸灯的颜色
+  if (oldViewProps.timeLineEndPointColor != newViewProps.timeLineEndPointColor) {
+    if (newViewProps.timeLineEndPointColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.timeLineEndPointColor.c_str()];
+      _klineCharView.timeLineEndPointColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  // 分时线呼吸灯的颜色半径
+  if (oldViewProps.timeLineEndRadius != newViewProps.timeLineEndRadius) {
+    _klineCharView.timeLineEndRadius = newViewProps.timeLineEndRadius;
+  }
+  // timeLineEndMultiply ⚠️暂时忽略
+  // 选中十字线X轴坐标连框纵向内边距 ⚠️暂时忽略 selectedDateBoxVerticalPadding
+  // 选中十字线X轴坐标连框横向内边距 ⚠️暂时忽略 selectedDateBoxHorizontalPadding
+  // 设置主实图图例距离视图上边缘的距离 ⚠️暂时忽略 mainLegendMarginTop
+  // 设置图例距离视图左边缘的距离 ⚠️暂时忽略 legendMarginLeft
+  // 设置涨的颜色
+  if (oldViewProps.increaseColor != newViewProps.increaseColor) {
+    if (newViewProps.increaseColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.increaseColor.c_str()];
+      _klineCharView.increaseColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  // 设置跌的颜色
+  if (oldViewProps.decreaseColor != newViewProps.decreaseColor) {
+    if (newViewProps.decreaseColor.size() != 0) {
+      NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.decreaseColor.c_str()];
+      _klineCharView.decreaseColor = [self hexStringToColor:colorToConvert];
+    }
+  }
+  [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> KlineViewCls(void)

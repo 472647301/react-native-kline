@@ -66,6 +66,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign) CGFloat timeLineEndRadius;
 
+@property(nonatomic,strong) UIColor* increaseColor;
+
+@property(nonatomic,strong) UIColor* decreaseColor;
+
 @end
 
 NS_ASSUME_NONNULL_END

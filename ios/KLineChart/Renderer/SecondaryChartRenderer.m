@@ -46,7 +46,11 @@
 }
 
 
-- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX {
+- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+timeLineFillTopColor:(UIColor *) timeLineFillTopColor
+timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
+timeLineEndPointColor:(UIColor *) timeLineEndPointColor
+timeLineEndRadius:(CGFloat) timeLineEndRadius {
     if(_state == SecondaryStateMacd) {
         [self drawMACD:context lastPoit:lastPoint curPoint:curPoint curX:curX];
     } else if (_state == SecondaryStateKDJ) {

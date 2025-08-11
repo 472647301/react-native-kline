@@ -132,6 +132,16 @@
   [self setNeedsDisplay];
 }
 
+-(void)setIncreaseColor:(UIColor *)increaseColor{
+  _increaseColor = increaseColor;
+  [self setNeedsDisplay];
+}
+
+-(void)setDecreaseColor:(UIColor *)decreaseColor{
+  _decreaseColor = decreaseColor;
+  [self setNeedsDisplay];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
                         datas:(NSArray<KLineModel *> *)datas
                       scrollX:(CGFloat)scrollX
@@ -154,8 +164,13 @@
         self.gridColumns = ChartStyle_gridColumns;
         self.gridRows = ChartStyle_gridRows;
         self.fromat = @"MM-dd HH:mm";
-      self.backgroundFillTopColor = [UIColor colorWithCGColor:ChartColors_bgColor.CGColor];
-      self.backgroundFillBottomColor = [UIColor colorWithCGColor:ChartColors_bgColor.CGColor];
+        self.backgroundFillTopColor = [UIColor rgb_r:0x0E g:0x0E b:0x0E alpha:1];
+        self.backgroundFillBottomColor = [UIColor rgb_r:0x0E g:0x0E b:0x0E alpha:1];
+        self.timeLineColor = [UIColor colorWithCGColor:ChartColors_kLineColor.CGColor];
+        self.timeLineFillTopColor = [UIColor rgb_r:0x4c g:0x86 b:0xCD alpha:1];
+        self.timeLineFillBottomColor = [UIColor rgb_r:0x00 g:0x00 b:0x00 alpha:0];
+        self.timeLineEndPointColor = [UIColor colorWithCGColor:ChartColors_realTimeLineColor.CGColor];
+        self.timeLineEndRadius = 2.0;
     }
     return self;
 }
@@ -330,12 +345,12 @@
 -(void)drawBgColor:(CGContextRef)context rect:(CGRect)rect {
      CGContextSetFillColorWithColor(context, [_backgroundFillTopColor CGColor]);
      CGContextFillRect(context, rect);
-      [_mainRenderer drawBg:context];
+      [_mainRenderer drawBg:context backgroundFillTopColor:_backgroundFillTopColor backgroundFillBottomColor:_backgroundFillBottomColor];
       if(_volRenderer != nil) {
-          [_volRenderer drawBg:context];
+          [_volRenderer drawBg:context backgroundFillTopColor:_backgroundFillTopColor backgroundFillBottomColor:_backgroundFillBottomColor];
       }
       if(_seconderyRender != nil) {
-          [_seconderyRender drawBg:context];
+          [_seconderyRender drawBg:context backgroundFillTopColor:_backgroundFillTopColor backgroundFillBottomColor:_backgroundFillBottomColor];
       }
 }
 -(void)drawGrid:(CGContextRef)context {
@@ -360,12 +375,12 @@
         if(index != _startIndex) {
             lastPoint = self.datas[index - 1];
         }
-        [_mainRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX];
+        [_mainRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius];
         if(_volRenderer != nil) {
-            [_volRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX];
+            [_volRenderer drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius];
         }
         if(_seconderyRender != nil) {
-            [_seconderyRender drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX];
+            [_seconderyRender drawChart:context lastPoit:lastPoint curPoint:curPoint curX:_curX timeLineColor:_timeLineColor timeLineFillTopColor:_timeLineFillTopColor timeLineFillBottomColor:_timeLineFillBottomColor timeLineEndPointColor:_timeLineEndPointColor timeLineEndRadius:_timeLineEndRadius];
         }
     }
 }

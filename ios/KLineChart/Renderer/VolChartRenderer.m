@@ -25,7 +25,11 @@
     CGContextDrawPath(context, kCGPathStroke);
     
 }
-- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX {
+- (void)drawChart:(CGContextRef)context lastPoit:(KLineModel *)lastPoint curPoint:(KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(UIColor *)timeLineColor
+timeLineFillTopColor:(UIColor *) timeLineFillTopColor
+timeLineFillBottomColor:(UIColor *) timeLineFillBottomColor
+timeLineEndPointColor:(UIColor *) timeLineEndPointColor
+timeLineEndRadius:(CGFloat) timeLineEndRadius {
     [self drawVolChat:context curPoint:curPoint curX:curX];
     if(lastPoint != nil){
         if(curPoint.MA5Volume != 0) {

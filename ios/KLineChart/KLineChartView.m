@@ -140,11 +140,22 @@
   self.painterView.timeLineEndRadius = timeLineEndRadius;
 }
 
+-(void)setIncreaseColor:(UIColor *)increaseColor{
+  _increaseColor = increaseColor;
+  self.painterView.increaseColor = increaseColor;
+}
+
+-(void)setDecreaseColor:(UIColor *)decreaseColor{
+  _decreaseColor = decreaseColor;
+  self.painterView.decreaseColor = decreaseColor;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         _scaleX = 1;
+        _fromat = @"MM-dd HH:mm";
         _mainState = MainStateMA;
         _secondaryState = SecondaryStateWR;
         _scrollX = -self.frame.size.width / 5 + ChartStyle_candleWidth / 2;
