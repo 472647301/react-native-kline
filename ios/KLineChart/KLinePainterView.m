@@ -92,11 +92,6 @@
   [self setNeedsDisplay];
 }
 
--(void)setFromat:(NSString *)fromat {
-  _fromat = fromat;
-  [self setNeedsDisplay];
-}
-
 -(void)setBackgroundFillTopColor:(UIColor *)backgroundFillTopColor{
   _backgroundFillTopColor = backgroundFillTopColor;
   [self setNeedsDisplay];
@@ -142,6 +137,26 @@
   [self setNeedsDisplay];
 }
 
+-(void)setValueFormatter:(NSString *)valueFormatter{
+  _valueFormatter = valueFormatter;
+  [self setNeedsDisplay];
+}
+
+-(void)setVolFormatter:(NSString *)volFormatter{
+  _volFormatter = volFormatter;
+  [self setNeedsDisplay];
+}
+
+-(void)setDateTimeFormatter:(NSString *)dateTimeFormatter{
+  _dateTimeFormatter  = dateTimeFormatter;
+  [self setNeedsDisplay];
+}
+
+-(void)setMainValueFormatter:(NSString *)mainValueFormatter{
+  _mainValueFormatter = mainValueFormatter;
+  [self setNeedsDisplay];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
                         datas:(NSArray<KLineModel *> *)datas
                       scrollX:(CGFloat)scrollX
@@ -163,7 +178,6 @@
         self.candleWidth = ChartStyle_candleWidth * self.scaleX;
         self.gridColumns = ChartStyle_gridColumns;
         self.gridRows = ChartStyle_gridRows;
-        self.fromat = @"MM-dd HH:mm";
         self.backgroundFillTopColor = [UIColor rgb_r:0x0E g:0x0E b:0x0E alpha:1];
         self.backgroundFillBottomColor = [UIColor rgb_r:0x0E g:0x0E b:0x0E alpha:1];
         self.timeLineColor = [UIColor colorWithCGColor:ChartColors_kLineColor.CGColor];
@@ -173,6 +187,10 @@
         self.timeLineEndRadius = 2.0;
         self.increaseColor = [UIColor colorWithCGColor:ChartColors_upColor.CGColor];
         self.decreaseColor = [UIColor colorWithCGColor:ChartColors_dnColor.CGColor];
+        self.valueFormatter = @"%.03f";
+        self.volFormatter = @"%.03f";
+        self.dateTimeFormatter = @"MM-dd HH:mm";
+        self.mainValueFormatter = @"%.03f";
     }
     return self;
 }
@@ -387,12 +405,12 @@
     }
 }
 -(void)drawRightText:(CGContextRef)context {
-    [_mainRenderer drawRightText:context gridRows:_gridRows gridColums:_gridColumns];
+    [_mainRenderer drawRightText:context gridRows:_gridRows gridColums:_gridColumns valueFormatter:_valueFormatter volFormatter:_volFormatter];
     if(_volRenderer != nil) {
-        [_volRenderer drawRightText:context gridRows:_gridRows gridColums:_gridColumns];
+        [_volRenderer drawRightText:context gridRows:_gridRows gridColums:_gridColumns valueFormatter:_valueFormatter volFormatter:_volFormatter];
     }
     if(_seconderyRender != nil) {
-        [_seconderyRender drawRightText:context gridRows:_gridRows gridColums:_gridColumns];
+        [_seconderyRender drawRightText:context gridRows:_gridRows gridColums:_gridColumns valueFormatter:_valueFormatter volFormatter:_volFormatter];
     }
 }
 -(void)drawDate:(CGContextRef)context {
@@ -412,12 +430,13 @@
     CGFloat itemWidth = self.candleWidth + ChartStyle_canldeMargin;
     CGFloat y1 = [self.mainRenderer getY:_mMainHighMaxValue];
     CGFloat x1 = self.frame.size.width - ((self.mMainMaxIndex - self.startIndex) * itemWidth + self.startX + self.candleWidth / 2);
+    NSString *str = @"——";
     if(x1 < self.frame.size.width / 2) {
-        NSString *text = [NSString stringWithFormat:@"——%.2f",_mMainHighMaxValue];
+      NSString *text = [NSString stringWithFormat:[str stringByAppendingString: _mainValueFormatter],_mMainHighMaxValue];
         CGRect rect = [text getRectWithFontSize:ChartStyle_defaultTextSize];
         [self.mainRenderer drawText:text atPoint:CGPointMake(x1, y1 - rect.size.height / 2) fontSize:ChartStyle_defaultTextSize textColor:[UIColor whiteColor]];
     } else {
-        NSString *text = [NSString stringWithFormat:@"%.2f——",_mMainHighMaxValue];
+        NSString *text = [NSString stringWithFormat:[_mainValueFormatter stringByAppendingString: str],_mMainHighMaxValue];
        CGRect rect = [text getRectWithFontSize:ChartStyle_defaultTextSize];
        [self.mainRenderer drawText:text atPoint:CGPointMake(x1 - rect.size.width, y1 - rect.size.height / 2) fontSize:ChartStyle_defaultTextSize textColor:[UIColor whiteColor]];
     }
@@ -425,11 +444,11 @@
     CGFloat y2 = [self.mainRenderer getY:_mMainLowMinValue];
     CGFloat x2 = self.frame.size.width - ((self.mMainMinIndex - self.startIndex) * itemWidth + self.startX + self.candleWidth / 2);
     if(x2 < self.frame.size.width / 2) {
-        NSString *text = [NSString stringWithFormat:@"——%.2f",_mMainLowMinValue];
+        NSString *text = [NSString stringWithFormat:[str stringByAppendingString: _mainValueFormatter],_mMainLowMinValue];
         CGRect rect = [text getRectWithFontSize:ChartStyle_defaultTextSize];
         [self.mainRenderer drawText:text atPoint:CGPointMake(x2, y2 - rect.size.height / 2) fontSize:ChartStyle_defaultTextSize textColor:[UIColor whiteColor]];
     } else {
-        NSString *text = [NSString stringWithFormat:@"%.2f——",_mMainLowMinValue];
+        NSString *text = [NSString stringWithFormat:[_mainValueFormatter stringByAppendingString: str],_mMainLowMinValue];
        CGRect rect = [text getRectWithFontSize:ChartStyle_defaultTextSize];
        [self.mainRenderer drawText:text atPoint:CGPointMake(x2 - rect.size.width, y2 - rect.size.height / 2) fontSize:ChartStyle_defaultTextSize textColor:[UIColor whiteColor]];
     }
@@ -461,7 +480,7 @@
 }
 
 -(void)drawLongPressCrossLineText:(CGContextRef)context curPoint:(KLineModel *)curPoint curX:(CGFloat)curX y:(CGFloat)y {
-    NSString *text = [NSString stringWithFormat:@"%.2f",curPoint.close];
+    NSString *text = [NSString stringWithFormat:_mainValueFormatter,curPoint.close];
     CGRect rect = [text getRectWithFontSize:ChartStyle_defaultTextSize];
     CGFloat padding = 3;
     CGFloat textHeight = rect.size.height + padding * 2;
@@ -510,17 +529,17 @@
 }
 
 -(void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint {
-    [_mainRenderer drawTopText:context curPoint:curPoint];
+    [_mainRenderer drawTopText:context curPoint:curPoint mainValueFormatter:_mainValueFormatter volFormatter:_volFormatter];
     if(_volRenderer != nil) {
-        [_volRenderer drawTopText:context curPoint:curPoint];
+        [_volRenderer drawTopText:context curPoint:curPoint mainValueFormatter:_mainValueFormatter volFormatter:_volFormatter];
     }
     if(_seconderyRender != nil) {
-        [_seconderyRender drawTopText:context curPoint:curPoint];
+        [_seconderyRender drawTopText:context curPoint:curPoint mainValueFormatter:_mainValueFormatter volFormatter:_volFormatter];
     }
 }
 -(void)drawRealTimePrice:(CGContextRef)context {
     KLineModel *point = self.datas.firstObject;
-    NSString *text = [NSString stringWithFormat:@"%.2f",point.close];
+    NSString *text = [NSString stringWithFormat:_mainValueFormatter,point.close];
     CGFloat fontSize = 10;
     CGRect rect = [text getRectWithFontSize:fontSize];
     CGFloat y = [self.mainRenderer getY:point.close];
@@ -610,7 +629,7 @@
 -(NSString *)calculateDateText:(NSTimeInterval)time {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-    formater.dateFormat = _fromat;
+    formater.dateFormat = _dateTimeFormatter;
     return [formater stringFromDate:date];
 }
 

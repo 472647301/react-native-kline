@@ -95,17 +95,27 @@
     return _scaleY * (_maxValue - value) + CGRectGetMinY(_chartRect) + _topPadding;
 }
 
--(NSString *)volFormat:(CGFloat)value {
+-(NSString *)volFormat:(CGFloat)value
+          volFormatter:(NSString *)volFormatter{
     if (value > 10000 && value < 999999) {
          CGFloat d = value / 1000;
-         return  [NSString stringWithFormat:@"%.2fK",d];
+         return  [NSString stringWithFormat:[volFormatter stringByAppendingString: @"K"],d];
        } else if (value > 1000000) {
          CGFloat d = value / 1000000;
-         return [NSString stringWithFormat:@"%.2fM",d];
+         return [NSString stringWithFormat:[volFormatter stringByAppendingString: @"M"],d];
        }
-       return [NSString stringWithFormat:@"%.2f",value];
+       return [NSString stringWithFormat:volFormatter,value];
     
 }
 
+
+- (void)drawChart:(nonnull CGContextRef)context lastPoit:(nonnull KLineModel *)lastPoint curPoint:(nonnull KLineModel *)curPoint curX:(CGFloat)curX timeLineColor:(nonnull UIColor *)timeLineColor timeLineFillTopColor:(nonnull UIColor *)timeLineFillTopColor timeLineFillBottomColor:(nonnull UIColor *)timeLineFillBottomColor timeLineEndPointColor:(nonnull UIColor *)timeLineEndPointColor timeLineEndRadius:(CGFloat)timeLineEndRadius increaseColor:(nonnull UIColor *)increaseColor decreaseColor:(nonnull UIColor *)decreaseColor {
+}
+
+- (void)drawRightText:(nonnull CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums valueFormatter:(nonnull NSString *)valueFormatter volFormatter:(nonnull NSString *)volFormatter {
+}
+
+- (void)drawTopText:(nonnull CGContextRef)context curPoint:(nonnull KLineModel *)curPoint mainValueFormatter:(nonnull NSString *)mainValueFormatter volFormatter:(nonnull NSString *)volFormatter {
+}
 
 @end

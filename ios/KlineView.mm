@@ -136,16 +136,34 @@ using namespace facebook::react;
     _klineCharView.gridRows = newViewProps.gridRows;
   }
   // Slide left K line inside indent width ⚠️暂时忽略 overScrollRange
-  // Y值精度格式化 `%.03f` ⚠️暂时忽略 valueFormatter
-  // 成交量格式化 `%.03f` ⚠️暂时忽略 volFormatter
-  // 时间格式化 `yyyy-MM-dd HH:mm`
-  if (oldViewProps.dateTimeFormatter != newViewProps.dateTimeFormatter) {
-    if (newViewProps.dateTimeFormatter.empty() != NO) {
-      NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.dateTimeFormatter.c_str()];
-      _klineCharView.fromat = fromat;
+  // Y值精度格式化
+  if (oldViewProps.valueFormatter != newViewProps.valueFormatter) {
+    if (newViewProps.valueFormatter.size() != 0) {
+      NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.valueFormatter.c_str()];
+      _klineCharView.valueFormatter = fromat;
     }
   }
-  // 主视图Formatte `%.03f` ⚠️暂时忽略 mainValueFormatter
+  // 成交量格式化
+  if (oldViewProps.volFormatter != newViewProps.volFormatter) {
+    if (newViewProps.volFormatter.size() != 0) {
+      NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.volFormatter.c_str()];
+      _klineCharView.volFormatter = fromat;
+    }
+  }
+  // 时间格式化
+  if (oldViewProps.dateTimeFormatter != newViewProps.dateTimeFormatter) {
+    if (newViewProps.dateTimeFormatter.size() != 0) {
+      NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.dateTimeFormatter.c_str()];
+      _klineCharView.dateTimeFormatter = fromat;
+    }
+  }
+  // 主视图Formatte
+  if (oldViewProps.mainValueFormatter != newViewProps.mainValueFormatter) {
+    if (newViewProps.mainValueFormatter.size() != 0) {
+      NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.mainValueFormatter.c_str()];
+      _klineCharView.mainValueFormatter = fromat;
+    }
+  }
   // 设置选中X轴坐标背景色 ⚠️暂时忽略 selectedXLabelBackgroundColor
   // 设置价格线上的文字颜色 ⚠️暂时忽略 priceLabelInLineTextColor
   // 设置价格线上的文字大小 ⚠️暂时忽略 priceLabelInLineTextSize

@@ -114,13 +114,17 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius
         }
     }
 }
-- (void)drawRightText:(CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums {
-    NSString *text = [self volFormat:self.maxValue];
+- (void)drawRightText:(CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums
+       valueFormatter:(NSString *)valueFormatter
+         volFormatter:(NSString *)volFormatter{
+    NSString *text = [self volFormat:self.maxValue volFormatter:valueFormatter];
     CGRect rect = [text getRectWithFontSize:ChartStyle_reightTextSize];
     [self drawText:text atPoint:CGPointMake(self.chartRect.size.width - rect.size.width, CGRectGetMinY(self.chartRect)) fontSize:ChartStyle_reightTextSize textColor:ChartColors_reightTextColor];
 }
 
-- (void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint {
+- (void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint
+ mainValueFormatter:(NSString *)mainValueFormatter
+       volFormatter:(NSString *)volFormatter{
     NSMutableAttributedString *topAttributeText = [[NSMutableAttributedString alloc] init];
     
     switch (_state) {
@@ -132,30 +136,30 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius
                  [topAttributeText appendAttributedString:attr];
              }
             if(curPoint.macd != 0) {
-                 NSString *str = [NSString stringWithFormat:@"MACD:%.2f    ", curPoint.macd];
+              NSString *str = [NSString stringWithFormat:[@"MACD:" stringByAppendingString: mainValueFormatter], curPoint.macd];
                  NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_macdColor}];
                  [topAttributeText appendAttributedString:attr];
              }
             if(curPoint.dif != 0) {
-                 NSString *str = [NSString stringWithFormat:@"DIF:%.2f    ", curPoint.dif];
+                 NSString *str = [NSString stringWithFormat:[@"DIF:" stringByAppendingString: mainValueFormatter], curPoint.dif];
                  NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_difColor}];
                  [topAttributeText appendAttributedString:attr];
              }
             if(curPoint.dea != 0) {
-                 NSString *str = [NSString stringWithFormat:@"DEA:%.2f    ", curPoint.dea];
+                 NSString *str = [NSString stringWithFormat:[@"DEA:" stringByAppendingString: mainValueFormatter], curPoint.dea];
                  NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_deaColor}];
                  [topAttributeText appendAttributedString:attr];
              }
         } break;
         case SecondaryStateRSI:
         {
-            NSString *str = [NSString stringWithFormat:@"RSI(14):%.2f    ", curPoint.rsi];
+            NSString *str = [NSString stringWithFormat:[@"RSI(14):" stringByAppendingString: mainValueFormatter], curPoint.rsi];
             NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_rsiColor}];
             [topAttributeText appendAttributedString:attr];
         } break;
         case SecondaryStateWR:
         {
-            NSString *str = [NSString stringWithFormat:@"WR(14):%.2f    ", curPoint.r];
+            NSString *str = [NSString stringWithFormat:[@"WR(14):" stringByAppendingString: mainValueFormatter], curPoint.r];
             NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_wrColor}];
             [topAttributeText appendAttributedString:attr];
         } break;
@@ -167,17 +171,17 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius
                  [topAttributeText appendAttributedString:attr];
              }
             if(curPoint.k != 0) {
-                 NSString *str = [NSString stringWithFormat:@"K:%.2f    ", curPoint.k];
+                 NSString *str = [NSString stringWithFormat:[@"K:" stringByAppendingString: mainValueFormatter], curPoint.k];
                  NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_kColor}];
                  [topAttributeText appendAttributedString:attr];
              }
             if(curPoint.d != 0) {
-                 NSString *str = [NSString stringWithFormat:@"D:%.2f    ", curPoint.d];
+                 NSString *str = [NSString stringWithFormat:[@"D:" stringByAppendingString: mainValueFormatter], curPoint.d];
                  NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_dColor}];
                  [topAttributeText appendAttributedString:attr];
              }
             if(curPoint.j != 0) {
-                 NSString *str = [NSString stringWithFormat:@"J:%.2f    ", curPoint.j];
+                 NSString *str = [NSString stringWithFormat:[@"J:" stringByAppendingString: mainValueFormatter], curPoint.j];
                  NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_jColor}];
                  [topAttributeText appendAttributedString:attr];
              }

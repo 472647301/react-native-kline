@@ -129,6 +129,9 @@ export function KLinePage() {
           // decreaseColor='#722ed1'
           // gridColumns={4}
           // gridRows={3}
+          // volFormatter="%.02f"
+          // valueFormatter="%.04f"
+          // mainValueFormatter="%.03f"
         />
         {loading ? (
           <View style={styles.loading}>

@@ -188,33 +188,37 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius
     
 }
 
-- (void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint {
+- (void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint
+ mainValueFormatter:(NSString *)mainValueFormatter
+       volFormatter:(NSString *)volFormatter{
     NSMutableAttributedString *topAttributeText = [[NSMutableAttributedString alloc] init];
     if(curPoint.MA5Price != 0) {
-        NSString *str = [NSString stringWithFormat:@"MA5:%.2f   ",curPoint.MA5Price];
+        NSString *str = [NSString stringWithFormat:[@"MA5:" stringByAppendingString: mainValueFormatter],curPoint.MA5Price];
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_ma5Color}];
         [topAttributeText appendAttributedString:attr];
     }
     if(curPoint.MA10Price != 0) {
-        NSString *str = [NSString stringWithFormat:@"MA10:%.2f    ",curPoint.MA10Price];
+        NSString *str = [NSString stringWithFormat:[@"MA10:" stringByAppendingString: mainValueFormatter],curPoint.MA10Price];
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_ma10Color}];
         [topAttributeText appendAttributedString:attr];
     }
     if(curPoint.MA30Price != 0) {
-        NSString *str = [NSString stringWithFormat:@"MA30:%.2f   ",curPoint.MA30Price];
+        NSString *str = [NSString stringWithFormat:[@"MA30:" stringByAppendingString: mainValueFormatter],curPoint.MA30Price];
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_ma30Color}];
         [topAttributeText appendAttributedString:attr];
     }
     [topAttributeText drawAtPoint:CGPointMake(5, 6)];
 }
 
-- (void)drawRightText:(CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums {
+- (void)drawRightText:(CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums
+       valueFormatter:(NSString *)valueFormatter
+         volFormatter:(NSString *)volFormatter{
     CGFloat rowSpace = self.chartRect.size.height / (CGFloat)gridRows;
     for (int i = 0; i <= gridRows; i++) {
         CGFloat position = 0;
         position = (CGFloat)(gridRows - i) * rowSpace;
         CGFloat value = position / self.scaleY + self.minValue;
-        NSString *valueStr = [NSString stringWithFormat:@"%.2f",value];
+        NSString *valueStr = [NSString stringWithFormat:valueFormatter,value];
         CGRect rect = [valueStr getRectWithFontSize:ChartStyle_reightTextSize];
         CGFloat y = 0;
         if(i == 0) {

@@ -32,10 +32,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)drawRightText:(CGContextRef)context
             gridRows:(NSUInteger)gridRows
-          gridColums:(NSUInteger)gridColums;
+          gridColums:(NSUInteger)gridColums
+      valueFormatter:(NSString *)valueFormatter
+        volFormatter:(NSString *)volFormatter;
 
 -(void)drawTopText:(CGContextRef)context
-          curPoint:(KLineModel *)curPoint;
+          curPoint:(KLineModel *)curPoint
+mainValueFormatter:(NSString *)mainValueFormatter
+      volFormatter:(NSString *)volFormatter;
 
 -(void)drawBg:(CGContextRef)context backgroundFillTopColor:(UIColor *)backgroundFillTopColor backgroundFillBottomColor:(UIColor *) backgroundFillBottomColor;
 
@@ -65,7 +69,8 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius
        fontSize:(CGFloat)size
       textColor:(UIColor *)color;
 
--(NSString *)volFormat:(CGFloat)value;
+-(NSString *)volFormat:(CGFloat)value
+          volFormatter:(NSString *)volFormatter;
 @end
 
 NS_ASSUME_NONNULL_END

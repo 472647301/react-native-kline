@@ -40,8 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign) NSInteger gridRows;
 
-@property(nonatomic,strong) NSString* fromat;
-
 @property(nonatomic,strong) UIColor* backgroundFillTopColor;
 
 @property(nonatomic,strong) UIColor* backgroundFillBottomColor;
@@ -59,6 +57,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) UIColor* increaseColor;
 
 @property(nonatomic,strong) UIColor* decreaseColor;
+
+@property(nonatomic,strong) NSString* valueFormatter;
+
+@property(nonatomic,strong) NSString* volFormatter;
+
+@property(nonatomic,strong) NSString* dateTimeFormatter;
+
+@property(nonatomic,strong) NSString* mainValueFormatter;
 
 @property(nonatomic,copy) void(^showInfoBlock)(KLineModel *model, BOOL isLeft);
 

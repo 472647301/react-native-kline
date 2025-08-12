@@ -66,28 +66,32 @@ timeLineEndRadius:(CGFloat) timeLineEndRadius
     CGContextDrawPath(context, kCGPathStroke);
 }
 
-- (void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint {
+- (void)drawTopText:(CGContextRef)context curPoint:(KLineModel *)curPoint
+ mainValueFormatter:(NSString *)mainValueFormatter
+       volFormatter:(NSString *)volFormatter{
     NSMutableAttributedString *topAttributeText = [[NSMutableAttributedString alloc] init];
     {
-        NSString *str = [NSString stringWithFormat:@"VOL:%@   ", [self volFormat:curPoint.vol]];
+        NSString *str = [NSString stringWithFormat:@"VOL:%@   ", [self volFormat:curPoint.vol volFormatter:volFormatter]];
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_volColor}];
         [topAttributeText appendAttributedString:attr];
     }
     {
-        NSString *str = [NSString stringWithFormat:@"MA5:%@    ", [self volFormat:curPoint.MA5Volume]];
+        NSString *str = [NSString stringWithFormat:@"MA5:%@    ", [self volFormat:curPoint.MA5Volume volFormatter:volFormatter]];
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_ma5Color}];
         [topAttributeText appendAttributedString:attr];
     }
    {
-        NSString *str = [NSString stringWithFormat:@"MA10:%@   ",[self volFormat:curPoint.MA10Volume]];
+        NSString *str = [NSString stringWithFormat:@"MA10:%@   ",[self volFormat:curPoint.MA10Volume volFormatter:volFormatter]];
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:ChartStyle_defaultTextSize],NSForegroundColorAttributeName: ChartColors_ma10Color}];
         [topAttributeText appendAttributedString:attr];
     }
     [topAttributeText drawAtPoint:CGPointMake(5, CGRectGetMinY(self.chartRect))];
 }
 
-- (void)drawRightText:(CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums {
-    NSString *text = [self volFormat:self.maxValue];
+- (void)drawRightText:(CGContextRef)context gridRows:(NSUInteger)gridRows gridColums:(NSUInteger)gridColums
+       valueFormatter:(NSString *)valueFormatter
+         volFormatter:(NSString *)volFormatter{
+    NSString *text = [self volFormat:self.maxValue volFormatter:volFormatter];
     CGRect rect = [text getRectWithFontSize:ChartStyle_reightTextSize];
     [self drawText:text atPoint:CGPointMake(self.chartRect.size.width - rect.size.width, CGRectGetMinY(self.chartRect)) fontSize:ChartStyle_reightTextSize textColor:ChartColors_reightTextColor];
 }

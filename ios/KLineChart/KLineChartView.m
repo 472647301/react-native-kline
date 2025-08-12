@@ -100,11 +100,6 @@
   self.painterView.gridRows = gridRows;
 }
 
--(void)setFromat:(NSString *)fromat {
-  _fromat = fromat;
-  self.painterView.fromat = fromat;
-}
-
 -(void)setBackgroundFillTopColor:(UIColor *)backgroundFillTopColor{
   _backgroundFillTopColor = backgroundFillTopColor;
   self.painterView.backgroundFillTopColor = backgroundFillTopColor;
@@ -150,12 +145,31 @@
   self.painterView.decreaseColor = decreaseColor;
 }
 
+-(void)setValueFormatter:(NSString *)valueFormatter{
+  _valueFormatter = valueFormatter;
+  self.painterView.valueFormatter = valueFormatter;
+}
+
+-(void)setVolFormatter:(NSString *)volFormatter{
+  _volFormatter = volFormatter;
+  self.painterView.volFormatter = volFormatter;
+}
+
+-(void)setDateTimeFormatter:(NSString *)dateTimeFormatter{
+  _dateTimeFormatter  = dateTimeFormatter;
+  self.painterView.dateTimeFormatter = dateTimeFormatter;
+}
+
+-(void)setMainValueFormatter:(NSString *)mainValueFormatter{
+  _mainValueFormatter = mainValueFormatter;
+  self.painterView.mainValueFormatter = mainValueFormatter;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         _scaleX = 1;
-        _fromat = @"MM-dd HH:mm";
         _mainState = MainStateMA;
         _secondaryState = SecondaryStateWR;
         _scrollX = -self.frame.size.width / 5 + ChartStyle_candleWidth / 2;
