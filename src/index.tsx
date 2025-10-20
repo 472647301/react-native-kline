@@ -7,12 +7,12 @@ import KlineAdapter from './NativeKlineAdapter';
 export * from './KlineViewNativeComponent';
 export type { KLineEntity } from './NativeKlineAdapter';
 
-export interface KLineChartProps extends NativeProps {}
-export interface KLineChartRef extends Spec {
+export type KLineChartProps = NativeProps;
+export type KLineChart = Spec & {
   getData(): KLineEntity[];
-}
+};
 
-export const KLineChart = forwardRef<KLineChartRef, KLineChartProps>(
+export const KLineChart = forwardRef<KLineChart, KLineChartProps>(
   (props, ref) => {
     const listRef = useRef<KLineEntity[]>([]);
 

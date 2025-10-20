@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KLineInfoView : UIView
 @property(nonatomic,strong) KLineModel *model;
-
+@property(nonatomic,strong) NSMutableArray *selectedInfoLabels;
++(instancetype)lineInfoView;
 @end
 
 NS_ASSUME_NONNULL_END

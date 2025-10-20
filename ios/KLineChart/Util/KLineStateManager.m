@@ -17,7 +17,9 @@ static KLineStateManager *_manager = nil;
     self = [super init];
     if (self) {
         _mainState = MainStateMA;
-        _secondaryState = SecondaryStateMacd;
+        _secondaryState = SecondaryStateNONE;
+        _volFormatter = @"%.02f";
+        _valueFormatter = @"%.04f";
         _isLine = false;
     }
     return self;

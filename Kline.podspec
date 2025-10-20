@@ -13,9 +13,9 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => min_ios_version_supported }
   s.source       = { :git => "https://github.com/472647301/react-native-kline.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,mm,cpp}"
+  s.source_files = "ios/**/*.{h,m,mm,cpp,xib}"
   s.private_header_files = "ios/**/*.h"
-
+  s.resources = "ios/KLineChart/*.xib"
 
   install_modules_dependencies(s)
 end

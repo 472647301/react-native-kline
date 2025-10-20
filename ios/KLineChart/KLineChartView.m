@@ -165,6 +165,11 @@
   self.painterView.mainValueFormatter = mainValueFormatter;
 }
 
+-(void)setSelectedInfoLabels:(NSMutableArray *)selectedInfoLabels{
+  _selectedInfoLabels = selectedInfoLabels;
+  _infoView.selectedInfoLabels = selectedInfoLabels;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -332,10 +337,9 @@
 
 -(KLineInfoView *)infoView {
     if(_infoView == nil) {
-        _infoView = [[KLineInfoView alloc] initWithFrame:CGRectMake(0, 0, 120, 145)];
+      _infoView = [KLineInfoView lineInfoView];
     }
     return _infoView;
 }
-
 
 @end

@@ -24,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong) NSArray *datas;
 
-
+@property(nonatomic,assign) NSString *valueFormatter;
+@property(nonatomic,assign) NSString *volFormatter;
 
 @end
 

@@ -9,6 +9,9 @@
 
 #import "KLineStateManager.h"
 
+#include <vector>
+#include <string>
+
 using namespace facebook::react;
 
 @interface KlineView () <RCTKlineViewViewProtocol>
@@ -141,6 +144,7 @@ using namespace facebook::react;
     if (newViewProps.valueFormatter.size() != 0) {
       NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.valueFormatter.c_str()];
       _klineCharView.valueFormatter = fromat;
+      [KLineStateManager manager].valueFormatter = fromat;
     }
   }
   // 成交量格式化
@@ -148,6 +152,7 @@ using namespace facebook::react;
     if (newViewProps.volFormatter.size() != 0) {
       NSString * fromat = [[NSString alloc] initWithUTF8String: newViewProps.volFormatter.c_str()];
       _klineCharView.volFormatter = fromat;
+      [KLineStateManager manager].volFormatter = fromat;
     }
   }
   // 时间格式化
@@ -205,7 +210,16 @@ using namespace facebook::react;
   // 设置选择器弹出框 ⚠️暂时忽略 selectedInfoBox
   // 选中时X坐标边框线宽 ⚠️暂时忽略 selectedLabelBorderWidth
   // 选中时X坐标边框线颜色 ⚠️暂时忽略 selectedLabelBorderColor
-  // 设置选中框的文本 ⚠️暂时忽略 selectedInfoLabels
+  // 设置选中框的文本
+  if (areVectorsDifferent(oldViewProps.selectedInfoLabels,newViewProps.selectedInfoLabels) && newViewProps.selectedInfoLabels.size() != 0) {
+    NSMutableArray* nsArray = [NSMutableArray arrayWithCapacity:newViewProps.selectedInfoLabels.size()];
+    for (const std::string& cppStr : newViewProps.selectedInfoLabels) {
+        // Convert std::string to NSString
+        NSString* nsString = [NSString stringWithUTF8String:cppStr.c_str()];
+        [nsArray addObject:nsString];
+    }
+    _klineCharView.selectedInfoLabels = nsArray;
+  }
   // 设置十字线跟随手势移动/显示收盘价 ⚠️暂时忽略 crossFollowTouch
   // 设置y轴上Label与视图右边距 ⚠️暂时忽略 yLabelMarginBorder
   // 设置背景色顶部颜色
@@ -293,6 +307,21 @@ Class<RCTComponentViewProtocol> KlineViewCls(void)
     int b = (hex) & 0xFF;
 
     return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f];
+}
+
+bool areVectorsDifferent(const std::vector<std::string>& vec1, const std::vector<std::string>& vec2) {
+    // 检查向量大小是否不同
+    if (vec1.size() != vec2.size()) {
+        return true;
+    }
+    // 逐个比较元素
+    for (size_t i = 0; i < vec1.size(); ++i) {
+        if (vec1[i] != vec2[i]) {
+            return true; // 只要有一个元素不同，就返回 true
+        }
+    }
+    // 如果所有元素都相同，则返回 false
+    return false;
 }
 
 @end

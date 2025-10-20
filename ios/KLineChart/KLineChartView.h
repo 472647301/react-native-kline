@@ -76,6 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong) NSString* mainValueFormatter;
 
+@property(nonatomic,strong) NSMutableArray* selectedInfoLabels;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { KLineChart, KLineState } from 'rn-kline';
-import type { KLineChartRef, KLineChartProps } from 'rn-kline';
+import type { KLineChartProps } from 'rn-kline';
 import { fetch_kline_list, type IPeriod } from '../../api';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KLinePeriod } from './components/KLinePeriod';
@@ -16,7 +16,7 @@ export function KLinePage() {
   const [period, setPeriod] = useState<IPeriod>('MIN_15');
   const [kLineState, setKLineState] = useState(KLineState.K_LINE);
 
-  const kLineRef = useRef<KLineChartRef>(null);
+  const kLineRef = useRef<KLineChart>(null);
   const lastId = useRef<number>(undefined);
   const isLoadingHistory = useRef(false);
   const updateId = useRef(0);
